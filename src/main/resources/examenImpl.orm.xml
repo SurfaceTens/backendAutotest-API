@@ -4,21 +4,14 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
 	version="1.0">
 
-	<mapped-superclass class="es.mde.acing.utils.PreguntaImpl" access="FIELD">
+	<mapped-superclass class="es.mde.acing.utils.ExamenImpl" access="FIELD">
 		<attributes>
 
-			<basic name="tematica" />
-			<basic name="dificultad" />
-			<basic name="enunciado" />
-			<basic name="opcionCorrecta" />
-			<basic name="opcionInCorrecta1" />
-			<basic name="opcionInCorrecta2" />
-			<basic name="opcionInCorrecta3" />
-			<basic name="opcionInCorrecta4" />
-
-			<many-to-one name="autor" fetch="LAZY" optional="false"
+			<basic name="fecha" />
+			
+			<many-to-one name="alumno" fetch="LAZY" optional="false"
 				target-entity="com.dim.autotestAPI.entidades.AlumnoConID">
-				<join-column name="autor_id" referenced-column-name="ID" />
+				<join-column name="alumno_id" referenced-column-name="ID" />
 			</many-to-one>
 			
 			<one-to-many name="preguntaExamen" mapped-by="PreguntaExamen" target-entity="com.dim.autotestAPI.entidades.PreguntaExamen"/>

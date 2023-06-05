@@ -1,8 +1,8 @@
 package com.dim.autotestAPI.entidades;
 
-import es.mde.acing.utils.AlumnoImpl;
+import es.mde.acing.utils.ExamenImpl;
 
-public class AlumnoConID extends AlumnoImpl {
+public class ExamenConID extends ExamenImpl {
 
 	private Long id;
 
@@ -13,10 +13,10 @@ public class AlumnoConID extends AlumnoImpl {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "ALUMNO [" + getNombre() + "]";
+		return "ExamenConID [id=" + id + "]";
 	}
 
 }
