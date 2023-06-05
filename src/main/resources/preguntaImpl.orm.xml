@@ -16,12 +16,12 @@
 			<basic name="opcionInCorrecta3" />
 			<basic name="opcionInCorrecta4" />
 
-			<many-to-one name="autor" fetch="LAZY" optional="false"
+			<many-to-one name="alumno" fetch="LAZY" optional="false"
 				target-entity="com.dim.autotestAPI.entidades.AlumnoConID">
-				<join-column name="autor_id" referenced-column-name="ID" />
+				<join-column name="alumno_id" referenced-column-name="ID" />
 			</many-to-one>
 			
-			<one-to-many name="preguntaExamen" mapped-by="PreguntaExamen" target-entity="com.dim.autotestAPI.entidades.PreguntaExamen"/>
+			<one-to-many name="examenes" mapped-by="pregunta" target-entity="com.dim.autotestAPI.entidades.PreguntaExamenConID"/>
 			
 		</attributes>
 

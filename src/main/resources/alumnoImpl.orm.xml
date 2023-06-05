@@ -10,8 +10,8 @@
 			<basic name="nombre" />
 			<basic name="apellidos" />
 
-			<one-to-many name="pregunta" mapped-by="Pregunta" target-entity="com.dim.autotestAPI.entidades.PreguntaConID"/>
-			<one-to-many name="examen" mapped-by="Examen" target-entity="com.dim.autotestAPI.entidades.ExamenConID"/>
+			<one-to-many name="preguntas" mapped-by="alumno" target-entity="com.dim.autotestAPI.entidades.PreguntaConID"/>
+			<one-to-many name="examenes" mapped-by="alumno" target-entity="com.dim.autotestAPI.entidades.ExamenConID"/>
 			
 		</attributes>
 

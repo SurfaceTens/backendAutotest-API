@@ -4,17 +4,12 @@
                  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm http://xmlns.jcp.org/xml/ns/persistence/orm_2_2.xsd"
                  version="2.2">
 
-    
-    <entity class="com.dim.autotestAPI.entidades.PreguntaConID" access="FIELD">
-        <table name="PREGUNTAS" />
-        <inheritance strategy="SINGLE_TABLE" />
-        <discriminator-value>null</discriminator-value>
-        <discriminator-column name="identificador_pregunta" />
-        <attributes>
+    <entity class="com.dim.autotestAPI.entidades.PreguntaExamenConID" access="FIELD">
+        <table name="PREGUNTA_EXAMEN" />
+         <attributes>
             <id name="id">
                 <generated-value strategy="IDENTITY" />
             </id>
-
         </attributes>
     </entity>
 </entity-mappings>
