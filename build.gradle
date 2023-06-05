@@ -34,7 +34,7 @@ dependencies {
 	implementation 'javax.xml.bind:jaxb-api:2.3.1'
 	
 	//librería externa alojada en github
-	implementation 'com.github.SurfaceTens:backendAutotest-LIB:24cb474'
+	implementation 'com.github.SurfaceTens:backendAutotest-LIB:0ed6d8a'
 }
 
 tasks.named('test') {

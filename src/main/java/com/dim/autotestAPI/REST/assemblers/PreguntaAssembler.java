@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 import com.dim.autotestAPI.REST.models.PreguntaModel;
 import com.dim.autotestAPI.entidades.PreguntaConID;
 
+import es.mde.acing.utils.ConImagen;
 import es.mde.acing.utils.ConVideo;
-import es.mde.acing.utils.conImagen;
 
 @Component
 public class PreguntaAssembler implements RepresentationModelAssembler<PreguntaConID, PreguntaModel> {
