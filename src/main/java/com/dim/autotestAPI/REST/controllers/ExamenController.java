@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/preguntas")
-public class PreguntaController {
-	
+@RequestMapping("/examen")
+public class ExamenController {
+
 }
