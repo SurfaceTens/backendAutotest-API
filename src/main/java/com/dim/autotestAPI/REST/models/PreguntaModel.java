@@ -4,6 +4,7 @@ import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import es.mde.acing.utils.Alumno;
+import es.mde.acing.utils.PreguntaImpl.Adjunto;
 
 @Relation(itemRelation = "pregunta")
 public class PreguntaModel extends RepresentationModel<PreguntaModel> {
@@ -23,6 +24,7 @@ public class PreguntaModel extends RepresentationModel<PreguntaModel> {
 	// Clases Hijas
 	private String imagenURL;
 	private String videoURL;
+	private Adjunto adjunto;
 
 	public Long getId() {
 		return id;
@@ -126,6 +128,14 @@ public class PreguntaModel extends RepresentationModel<PreguntaModel> {
 
 	public void setVideoURL(String videoURL) {
 		this.videoURL = videoURL;
+	}
+
+	public Adjunto getAdjunto() {
+		return adjunto;
+	}
+
+	public void setAdjunto(Adjunto adjunto) {
+		this.adjunto = adjunto;
 	}
 
 	@Override

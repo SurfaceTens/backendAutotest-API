@@ -1,17 +1,24 @@
 package com.dim.autotestAPI.REST.assemblers;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
 import com.dim.autotestAPI.REST.models.PreguntaModel;
 import com.dim.autotestAPI.entidades.PreguntaConID;
+import com.dim.autotestAPI.entidades.PreguntaConImagen;
+import com.dim.autotestAPI.entidades.PreguntaConVideo;
+import com.dim.autotestAPI.REST.controllers.PreguntaController;
 
 import es.mde.acing.utils.ConImagen;
 import es.mde.acing.utils.ConVideo;
+import es.mde.acing.utils.PreguntaImpl.Adjunto;
 
 @Component
 public class PreguntaAssembler implements RepresentationModelAssembler<PreguntaConID, PreguntaModel> {
-	
+
 	@Override
 	public PreguntaModel toModel(PreguntaConID entity) {
 		PreguntaModel model = new PreguntaModel();
@@ -25,32 +32,48 @@ public class PreguntaAssembler implements RepresentationModelAssembler<PreguntaC
 		model.setOpcionIncorrecta3(entity.getOpcionInCorrecta3());
 		model.setOpcionIncorrecta4(entity.getOpcionInCorrecta4());
 		model.setAlumno(entity.getAlumno());
-		
+
 		// Para las clases hijas
-		if (entity instanceof ConVideo) {
+		if (entity.getAdjunto() == Adjunto.video) {
 			model.setVideoURL(((ConVideo) entity).getVideoURL());
-		} else if (entity instanceof ConImagen) {
+		} else if (entity.getAdjunto() == Adjunto.imagen) {
 			model.setVideoURL(((ConImagen) entity).getImagenURL());
 		}
-		
+
 		// Para sacar conclusiones de la entidad
-		int numExamenes = entity.getExamenes() != null ? entity.getExamenes().size() :0;
+		int numExamenes = entity.getExamenes() != null ? entity.getExamenes().size() : 0;
 		model.setNumExamenes(numExamenes);
 
 		// Para la relacion
 //		model.add(
 //				linkTo(methodOn(PreguntaController.class).one(((PreguntaConID) entity).getId())).withSelfRel(),
 //		     	linkTo(methodOn(PreguntaController.class).examenesPregunta(entity.getId())).withRel("examenes"),
-//		     	linkTo(methodOn(PreguntaController.class).preguntasPregunta(entity.getId())).withRel("alumnos")
 //				);
 		return model;
 	}
-	
-	
-	
-	
+
 	public PreguntaConID toEntity(PreguntaModel model) {
 		PreguntaConID entity = new PreguntaConID();
+		
+		// Para las clases hijas		
+		switch (model.getAdjunto()) {
+			case imagen: {
+				PreguntaConImagen imagen = new PreguntaConImagen();
+				imagen.setAdjunto(Adjunto.imagen);
+				imagen.setImagenURL(model.getImagenURL());
+				entity = imagen;
+				break;
+			}
+			case video: {
+				PreguntaConVideo video = new PreguntaConVideo();
+				video.setAdjunto(Adjunto.video);
+				video.setVideoURL(model.getVideoURL());
+				entity = video;
+				break;
+			}
+		}
+
+		
 		entity.setId(model.getId());
 		entity.setTematica(model.getTematica());
 		entity.setDificultad(model.getDificultad());
@@ -61,11 +84,10 @@ public class PreguntaAssembler implements RepresentationModelAssembler<PreguntaC
 		entity.setOpcionInCorrecta3(model.getOpcionIncorrecta3());
 		entity.setOpcionInCorrecta4(model.getOpcionIncorrecta4());
 		entity.setAlumno(model.getAlumno());
-		
+
 		// Para la releacion
 //		Examenes
-		
-		
+
 		return entity;
 	}
 

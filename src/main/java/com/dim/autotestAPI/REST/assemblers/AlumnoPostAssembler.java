@@ -1,10 +1,14 @@
 package com.dim.autotestAPI.REST.assemblers;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
 import com.dim.autotestAPI.REST.models.AlumnoPostModel;
 import com.dim.autotestAPI.entidades.AlumnoConID;
+import com.dim.autotestAPI.REST.controllers.AlumnoController;
 
 @Component
 public class AlumnoPostAssembler implements RepresentationModelAssembler<AlumnoConID, AlumnoPostModel> {

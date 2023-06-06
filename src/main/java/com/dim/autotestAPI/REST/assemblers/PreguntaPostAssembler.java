@@ -1,10 +1,17 @@
 package com.dim.autotestAPI.REST.assemblers;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
 import com.dim.autotestAPI.REST.models.PreguntaPostModel;
 import com.dim.autotestAPI.entidades.PreguntaConID;
+import com.dim.autotestAPI.REST.controllers.PreguntaController;
+
+import es.mde.acing.utils.ConImagen;
+import es.mde.acing.utils.ConVideo;
 
 @Component
 public class PreguntaPostAssembler implements RepresentationModelAssembler<PreguntaConID, PreguntaPostModel> {
@@ -20,7 +27,6 @@ public class PreguntaPostAssembler implements RepresentationModelAssembler<Pregu
 //			model.add(
 //					linkTo(methodOn(PreguntaController.class).one(((PreguntaConID) entity).getId())).withSelfRel(),
 //			     	linkTo(methodOn(PreguntaController.class).examenesPregunta(entity.getId())).withRel("examenes"),
-//			     	linkTo(methodOn(PreguntaController.class).preguntasPregunta(entity.getId())).withRel("alumnos")
 //					);
 		return model;
 	}

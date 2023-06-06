@@ -11,4 +11,8 @@ public class PreguntaConImagen extends PreguntaConID implements ConImagen{
 		return imagenURL;
 	}
 
+	public void setImagenURL(String imagenURL) {
+		this.imagenURL = imagenURL;
+	}
+
 }

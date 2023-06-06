@@ -11,4 +11,8 @@ public class PreguntaConVideo extends PreguntaConID implements ConVideo{
 		return videoURL;
 	}
 
+	public void setVideoURL(String videoURL) {
+		this.videoURL = videoURL;
+	}
+
 }
