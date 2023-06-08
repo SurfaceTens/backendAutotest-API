@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.dim.autotestAPI.REST.assemblers.AlumnoAssembler;
 import com.dim.autotestAPI.REST.assemblers.AlumnoListAssembler;
+import com.dim.autotestAPI.REST.assemblers.AlumnoPostAssembler;
 import com.dim.autotestAPI.REST.assemblers.ExamenListAssembler;
 import com.dim.autotestAPI.REST.excepciones.RegisterNotFoundException;
 import com.dim.autotestAPI.REST.models.AlumnoModel;
+import com.dim.autotestAPI.REST.models.AlumnoPostModel;
 import com.dim.autotestAPI.entidades.AlumnoConID;
 import com.dim.autotestAPI.repositorios.AlumnoRepositorio;
 import com.dim.autotestAPI.repositorios.ExamenRepositorio;
@@ -36,14 +38,16 @@ public class AlumnoController {
 	private final AlumnoRepositorio repositorio;
 	private final ExamenRepositorio exRepositorio;
 	private final AlumnoAssembler assembler;
+	private final AlumnoPostAssembler postAssembler;
 	private final AlumnoListAssembler listaAssembler;
 	private final ExamenListAssembler exListaAssembler;
 
-	AlumnoController(AlumnoRepositorio repositorio, AlumnoAssembler assembler, ExamenRepositorio exRepositorio,
+	AlumnoController(AlumnoRepositorio repositorio, AlumnoAssembler assembler, AlumnoPostAssembler postAssembler, ExamenRepositorio exRepositorio,
 			ExamenListAssembler exListaAssembler, AlumnoListAssembler listaAssembler) {
 		this.repositorio = repositorio;
 		this.exRepositorio = exRepositorio;
 		this.assembler = assembler;
+		this.postAssembler = postAssembler;
 		this.exListaAssembler = exListaAssembler;
 		this.listaAssembler = listaAssembler;
 	}
@@ -53,6 +57,19 @@ public class AlumnoController {
 		AlumnoConID alumno = (AlumnoConID) repositorio.findById(id)
 				.orElseThrow(() -> new RegisterNotFoundException(id, "Alumno"));
 		return assembler.toModel(alumno);
+	}
+	
+	@GetMapping
+	public CollectionModel<AlumnoModel> all() {
+		return listaAssembler.toCollection(repositorio.findAll());
+	}
+	
+	@PostMapping // Post o no post en el model?
+	public AlumnoModel add(@RequestBody AlumnoModel model) {
+		AlumnoConID categoria = repositorio.save(assembler.toEntity(model));
+		// Los log
+//		log.info("Añadido " + categoria);
+		return assembler.toModel(categoria);
 	}
 
 }
