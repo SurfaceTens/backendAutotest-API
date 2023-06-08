@@ -53,9 +53,9 @@ public class ExamenController {
 	
 	@GetMapping("{id}")
 	public ExamenModel one(@PathVariable Long id) {
-		ExamenConID alumno = (ExamenConID) repositorio.findById(id)
+		ExamenConID uno = (ExamenConID) repositorio.findById(id)
 				.orElseThrow(() -> new RegisterNotFoundException(id, "Examen"));
-		return assembler.toModel(alumno);
+		return assembler.toModel(uno);
 	}
 	
 	@GetMapping
@@ -65,10 +65,39 @@ public class ExamenController {
 	
 	@PostMapping // Post o no post en el model?
 	public ExamenModel add(@RequestBody ExamenModel model) {
-		ExamenConID categoria = repositorio.save(assembler.toEntity(model));
+		ExamenConID post = repositorio.save(assembler.toEntity(model));
 		// Los log
-//		log.info("Añadido " + categoria);
-		return assembler.toModel(categoria);
+//		log.info("Añadido " + post);
+		return assembler.toModel(post);
+	}
+	
+	@PutMapping("{id}") // Post o no post en el model?
+	public ExamenModel edit(@PathVariable Long id, @RequestBody ExamenModel model) {
+		  
+		ExamenConID editar = repositorio.findById(id).map(edt -> {
+			edt.setFecha(model.getFecha());
+			
+			// Para las relaciones
+			edt.setAlumno(model.getAlumno());
+//			edt.setPreguntas(model.getPreguntas());
+			
+		return repositorio.save(edt);
+		})
+		.orElseThrow(() -> new RegisterNotFoundException(id, "Examen"));
+		// Los log
+//		log.info("Actualizado " + editar);
+		return assembler.toModel(editar);
+}
+	
+	@DeleteMapping("{id}")
+	public void delete(@PathVariable Long id) {
+		// Los log
+//	    log.info("Borrado examen " + id);
+		ExamenConID delete = repositorio.findById(id).map(del -> {
+				repositorio.deleteById(id);	
+				return del;
+			})
+			.orElseThrow(() -> new RegisterNotFoundException(id, "Examen"));
 	}
 
 }

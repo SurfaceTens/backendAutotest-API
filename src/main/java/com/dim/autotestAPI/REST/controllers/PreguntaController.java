@@ -24,11 +24,19 @@ import com.dim.autotestAPI.REST.assemblers.PreguntaListAssembler;
 import com.dim.autotestAPI.REST.assemblers.AlumnoListAssembler;
 import com.dim.autotestAPI.REST.excepciones.RegisterNotFoundException;
 import com.dim.autotestAPI.REST.models.AlumnoModel;
+import com.dim.autotestAPI.REST.models.ExamenModel;
 import com.dim.autotestAPI.REST.models.PreguntaModel;
 import com.dim.autotestAPI.entidades.AlumnoConID;
+import com.dim.autotestAPI.entidades.ExamenConID;
 import com.dim.autotestAPI.entidades.PreguntaConID;
+import com.dim.autotestAPI.entidades.PreguntaConImagen;
+import com.dim.autotestAPI.entidades.PreguntaConVideo;
 import com.dim.autotestAPI.repositorios.AlumnoRepositorio;
 import com.dim.autotestAPI.repositorios.PreguntaRepositorio;
+
+import es.mde.acing.utils.Alumno;
+import es.mde.acing.utils.PreguntaImpl.Adjunto;
+
 import com.dim.autotestAPI.repositorios.PreguntaRepositorio;
 
 @CrossOrigin(origins = "*")
@@ -53,9 +61,9 @@ public class PreguntaController {
 	
 	@GetMapping("{id}")
 	public PreguntaModel one(@PathVariable Long id) {
-		PreguntaConID alumno = (PreguntaConID) repositorio.findById(id)
+		PreguntaConID uno = (PreguntaConID) repositorio.findById(id)
 				.orElseThrow(() -> new RegisterNotFoundException(id, "Pregunta"));
-		return assembler.toModel(alumno);
+		return assembler.toModel(uno);
 	}
 	
 	@GetMapping
@@ -65,10 +73,59 @@ public class PreguntaController {
 	
 	@PostMapping // Post o no post en el model?
 	public PreguntaModel add(@RequestBody PreguntaModel model) {
-		PreguntaConID categoria = repositorio.save(assembler.toEntity(model));
+		PreguntaConID post = repositorio.save(assembler.toEntity(model));
 		// Los log
-//		log.info("Añadido " + categoria);
-		return assembler.toModel(categoria);
+//		log.info("Añadido " + post);
+		return assembler.toModel(post);
+	}
+	
+	@PutMapping("{id}") // Post o no post en el model?
+	public PreguntaModel edit(@PathVariable Long id, @RequestBody PreguntaModel model) {
+		PreguntaConID editar = repositorio.findById(id).map(edt -> {
+			
+			// Para las clases hijas
+//			if (model.getAdjunto() == Adjunto.imagen) {
+//				PreguntaConImagen img = new PreguntaConImagen();
+//				repositorio.actualizarImagen(model.getImagenURL(), id);
+//				 edt = img;
+//			} else if (model.getAdjunto() == Adjunto.video) {
+//				PreguntaConVideo vid = new PreguntaConVideo();
+//				repositorio.actualizarVideo(model.getVideoURL(), id);
+//				 edt = vid;
+//			}
+			edt.setAdjunto(model.getAdjunto());
+			
+			// Resto de atributos
+			edt.setTematica(model.getTematica());
+			edt.setDificultad(model.getDificultad());
+			edt.setEnunciado(model.getEnunciado());
+			edt.setOpcionCorrecta(model.getOpcionCorrecta());
+			edt.setOpcionInCorrecta1(model.getOpcionIncorrecta1());
+			edt.setOpcionInCorrecta2(model.getOpcionIncorrecta2());
+			edt.setOpcionInCorrecta3(model.getOpcionIncorrecta3());
+			edt.setOpcionInCorrecta4(model.getOpcionIncorrecta4());
+			
+			// Para las relaciones
+			edt.setAlumno(model.getAlumno());
+//			edt.setExamenes(model.getExamenes());
+			
+		return repositorio.save(edt);
+		})
+		.orElseThrow(() -> new RegisterNotFoundException(id, "Examen"));
+		// Los log
+//		log.info("Actualizado " + editar);
+		return assembler.toModel(editar);
+}
+	
+	@DeleteMapping("{id}")
+	public void delete(@PathVariable Long id) {
+		// Los log
+//	    log.info("Borrada pregunta " + id);
+		PreguntaConID delete = repositorio.findById(id).map(del -> {
+				repositorio.deleteById(id);	
+				return del;
+			})
+			.orElseThrow(() -> new RegisterNotFoundException(id, "Pregunta"));
 	}
 	
 }
