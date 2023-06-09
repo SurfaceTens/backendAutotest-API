@@ -29,28 +29,32 @@ import com.dim.autotestAPI.REST.excepciones.RegisterNotFoundException;
 import com.dim.autotestAPI.REST.models.AlumnoModel;
 import com.dim.autotestAPI.REST.models.ExamenModel;
 import com.dim.autotestAPI.REST.models.ExamenPostModel;
+import com.dim.autotestAPI.REST.models.PreguntaModel;
 import com.dim.autotestAPI.entidades.AlumnoConID;
 import com.dim.autotestAPI.entidades.ExamenConID;
+import com.dim.autotestAPI.entidades.PreguntaExamenConID;
 import com.dim.autotestAPI.repositorios.AlumnoRepositorio;
 import com.dim.autotestAPI.repositorios.ExamenRepositorio;
-import com.dim.autotestAPI.repositorios.ExamenRepositorio;
+import com.dim.autotestAPI.repositorios.PreguntaExamenRepositorio;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/examen")
+@RequestMapping("/examenes")
 public class ExamenController {
 	
 	private final ExamenRepositorio repositorio;
 	private final AlumnoRepositorio alRepositorio;
+	private final PreguntaExamenRepositorio relacionRepositorio;
 	private final ExamenAssembler assembler;
 	private final ExamenPostAssembler postAssembler;
 	private final ExamenListAssembler listaAssembler;
 	private final AlumnoAssembler alAssembler;
 
 	ExamenController(ExamenRepositorio repositorio, ExamenAssembler assembler, ExamenPostAssembler postAssembler, AlumnoRepositorio alRepositorio,
-			ExamenListAssembler listaAssembler, AlumnoAssembler alAssembler) {
+			PreguntaExamenRepositorio relacionRepositorio, ExamenListAssembler listaAssembler, AlumnoAssembler alAssembler) {
 		this.repositorio = repositorio;
 		this.alRepositorio = alRepositorio;
+		this.relacionRepositorio = relacionRepositorio;
 		this.assembler = assembler;
 		this.postAssembler = postAssembler;
 		this.alAssembler = alAssembler;
@@ -72,6 +76,19 @@ public class ExamenController {
 	@PostMapping 
 	public ExamenModel add(@RequestBody ExamenPostModel model) {
 		ExamenConID post = repositorio.save(postAssembler.toEntity(model));
+		
+		// Guardar las relaciones con las preguntas
+//	    if (model.getPreguntas() != null && !model.getPreguntas().isEmpty()) {
+//	        for (PreguntaModel preguntaModel : model.getPreguntas()) {
+//	            PreguntaExamenConID preguntaExamen = new PreguntaExamenConID();
+//	            preguntaExamen.setExamen(post);
+//	            preguntaExamen.setPregunta(preguntaModel);
+//	            preguntaExamen.setRespuesta(preguntaModel.getRespuesta());
+//	            preguntaExamen.setAcertada(preguntaModel.isAcertada());
+//	            relacionRepositorio.save(preguntaExamen);
+//	        }
+//	    }
+	    
 		// Los log
 //		log.info("Añadido " + post);
 		return assembler.toModel(post);

@@ -10,7 +10,6 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
-import com.dim.autotestAPI.REST.models.ExamenModel;
 import com.dim.autotestAPI.REST.models.PreguntaModel;
 import com.dim.autotestAPI.entidades.PreguntaConID;
 import com.dim.autotestAPI.REST.controllers.PreguntaController;
@@ -26,7 +25,7 @@ public class PreguntaListAssembler<T extends Pregunta> implements Representation
 	@Override
 	public PreguntaModel toModel(T entity) {
 		PreguntaModel model = new PreguntaModel();
-		model.setId(((ExamenModel) entity).getId());
+		model.setId(((PreguntaConID) entity).getId());
 		model.setTematica(entity.getTematica());
 		model.setDificultad(entity.getDificultad());
 		model.setEnunciado(entity.getEnunciado());

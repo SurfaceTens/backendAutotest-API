@@ -24,8 +24,8 @@ public class ExamenListAssembler<T extends Alumno> implements RepresentationMode
 	@Override
 	public ExamenModel toModel(T entity) {
 		ExamenModel model = new ExamenModel();
-		model.setId(((ExamenModel) entity).getId());
-		model.setFecha(((ExamenModel) entity).getFecha());
+		model.setId(((ExamenConID) entity).getId());
+		model.setFecha(((ExamenConID) entity).getFecha());
 		
 		// Para sacar conclusiones de la entidad
 		int numPreguntas = entity.getPreguntas() != null ? entity.getPreguntas().size() : 0;
@@ -35,7 +35,7 @@ public class ExamenListAssembler<T extends Alumno> implements RepresentationMode
 		model.add(
 				linkTo(methodOn(ExamenController.class).one(((ExamenConID) entity).getId())).withSelfRel(),
 				linkTo(methodOn(ExamenController.class).one(((AlumnoConID) entity).getId())).withRel("alumno")
-//		     	linkTo(methodOn(ExamenController.class).preguntas(entity.getId())).withRel("preguntas") // No hace falta este endpoint por ahora
+//		     	linkTo(methodOn(ExamenController.class).preguntas(((PreguntaConID) entity).getId())).withRel("preguntas") // No hace falta este endpoint por ahora
 				);
 		return model;
 	}
