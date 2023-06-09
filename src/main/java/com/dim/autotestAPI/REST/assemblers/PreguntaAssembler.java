@@ -31,13 +31,17 @@ public class PreguntaAssembler implements RepresentationModelAssembler<PreguntaC
 		model.setOpcionIncorrecta2(entity.getOpcionInCorrecta2());
 		model.setOpcionIncorrecta3(entity.getOpcionInCorrecta3());
 		model.setOpcionIncorrecta4(entity.getOpcionInCorrecta4());
-		model.setAlumno(entity.getAlumno());
+		model.setAdjunto(null);
 
 		// Para las clases hijas
 		if (entity.getAdjunto() == Adjunto.video) {
 			model.setVideoURL(((ConVideo) entity).getVideoURL());
+			model.setImagenURL(null);
+			model.setAdjunto(Adjunto.video);
 		} else if (entity.getAdjunto() == Adjunto.imagen) {
-			model.setVideoURL(((ConImagen) entity).getImagenURL());
+			model.setImagenURL(((ConImagen) entity).getImagenURL());
+			model.setVideoURL(null);
+			model.setAdjunto(Adjunto.imagen);
 		}
 
 		// Para sacar conclusiones de la entidad

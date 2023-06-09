@@ -3,7 +3,8 @@ package com.dim.autotestAPI.REST.models;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
-import es.mde.acing.utils.Alumno;
+import com.dim.autotestAPI.entidades.AlumnoConID;
+
 import es.mde.acing.utils.PreguntaImpl.Adjunto;
 
 @Relation(itemRelation = "pregunta")
@@ -18,8 +19,10 @@ public class PreguntaModel extends RepresentationModel<PreguntaModel> {
 	private String opcionIncorrecta2;
 	private String opcionIncorrecta3;
 	private String opcionIncorrecta4;
+	
+	// Relaciones
 	private int numExamenes;
-	private Alumno alumno;
+	private AlumnoConID alumno;
 
 	// Clases Hijas
 	private String imagenURL;
@@ -106,11 +109,11 @@ public class PreguntaModel extends RepresentationModel<PreguntaModel> {
 		this.numExamenes = numExamenes;
 	}
 
-	public Alumno getAlumno() {
+	public AlumnoConID getAlumno() {
 		return alumno;
 	}
 
-	public void setAlumno(Alumno alumno) {
+	public void setAlumno(AlumnoConID alumno) {
 		this.alumno = alumno;
 	}
 

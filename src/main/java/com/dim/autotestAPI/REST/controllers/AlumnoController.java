@@ -64,16 +64,16 @@ public class AlumnoController {
 		return listaAssembler.toCollection(repositorio.findAll());
 	}
 	
-	@PostMapping // Post o no post en el model?
-	public AlumnoModel add(@RequestBody AlumnoModel model) {
-		AlumnoConID post = repositorio.save(assembler.toEntity(model));
+	@PostMapping
+	public AlumnoModel add(@RequestBody AlumnoPostModel model) {
+		AlumnoConID post = repositorio.save(postAssembler.toEntity(model));
 		// Los log
 //		log.info("Añadido " + post);
 		return assembler.toModel(post);
 	}
 	
-	@PutMapping("{id}") // Post o no post en el model?
-	public AlumnoModel edit(@PathVariable Long id, @RequestBody AlumnoModel model) {
+	@PutMapping("{id}")
+	public AlumnoModel edit(@PathVariable Long id, @RequestBody AlumnoPostModel model) {
 		  
 		AlumnoConID editar = repositorio.findById(id).map(edt -> {
 			edt.setNombre(model.getNombre());

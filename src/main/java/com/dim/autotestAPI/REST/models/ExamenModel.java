@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
-import es.mde.acing.utils.Alumno;
+import com.dim.autotestAPI.entidades.AlumnoConID;
 
 @Relation(itemRelation = "examen")
 public class ExamenModel extends RepresentationModel<ExamenModel> {
@@ -13,7 +13,7 @@ public class ExamenModel extends RepresentationModel<ExamenModel> {
 	private LocalDate fecha;
 	
 	// Relaciones
-	private Alumno alumno;
+	private AlumnoConID alumno;
 	private int numPreguntas;
 
 	public Long getId() {
@@ -32,11 +32,11 @@ public class ExamenModel extends RepresentationModel<ExamenModel> {
 		this.fecha = fecha;
 	}
 
-	public Alumno getAlumno() {
+	public AlumnoConID getAlumno() {
 		return alumno;
 	}
 
-	public void setAlumno(Alumno alumno) {
+	public void setAlumno(AlumnoConID alumno) {
 		this.alumno = alumno;
 	}
 

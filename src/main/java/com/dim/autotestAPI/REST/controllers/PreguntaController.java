@@ -21,11 +21,13 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.dim.autotestAPI.REST.assemblers.PreguntaAssembler;
 import com.dim.autotestAPI.REST.assemblers.PreguntaListAssembler;
+import com.dim.autotestAPI.REST.assemblers.PreguntaPostAssembler;
 import com.dim.autotestAPI.REST.assemblers.AlumnoListAssembler;
 import com.dim.autotestAPI.REST.excepciones.RegisterNotFoundException;
 import com.dim.autotestAPI.REST.models.AlumnoModel;
 import com.dim.autotestAPI.REST.models.ExamenModel;
 import com.dim.autotestAPI.REST.models.PreguntaModel;
+import com.dim.autotestAPI.REST.models.PreguntaPostModel;
 import com.dim.autotestAPI.entidades.AlumnoConID;
 import com.dim.autotestAPI.entidades.ExamenConID;
 import com.dim.autotestAPI.entidades.PreguntaConID;
@@ -47,14 +49,16 @@ public class PreguntaController {
 	private final PreguntaRepositorio repositorio;
 	private final AlumnoRepositorio alRepositorio;
 	private final PreguntaAssembler assembler;
+	private final PreguntaPostAssembler postAssembler;
 	private final PreguntaListAssembler listaAssembler;
 	private final AlumnoListAssembler alListaAssembler;
 
-	PreguntaController(PreguntaRepositorio repositorio, PreguntaAssembler assembler, AlumnoRepositorio alRepositorio,
+	PreguntaController(PreguntaRepositorio repositorio, PreguntaAssembler assembler, PreguntaPostAssembler postAssembler, AlumnoRepositorio alRepositorio,
 			PreguntaListAssembler listaAssembler, AlumnoListAssembler alListaAssembler) {
 		this.repositorio = repositorio;
 		this.alRepositorio = alRepositorio;
 		this.assembler = assembler;
+		this.postAssembler = postAssembler;
 		this.alListaAssembler = alListaAssembler;
 		this.listaAssembler = listaAssembler;
 	}
@@ -71,16 +75,16 @@ public class PreguntaController {
 		return listaAssembler.toCollection(repositorio.findAll());
 	}
 	
-	@PostMapping // Post o no post en el model?
-	public PreguntaModel add(@RequestBody PreguntaModel model) {
-		PreguntaConID post = repositorio.save(assembler.toEntity(model));
+	@PostMapping
+	public PreguntaModel add(@RequestBody PreguntaPostModel model) {
+		PreguntaConID post = repositorio.save(postAssembler.toEntity(model));
 		// Los log
 //		log.info("Añadido " + post);
 		return assembler.toModel(post);
 	}
 	
-	@PutMapping("{id}") // Post o no post en el model?
-	public PreguntaModel edit(@PathVariable Long id, @RequestBody PreguntaModel model) {
+	@PutMapping("{id}")
+	public PreguntaModel edit(@PathVariable Long id, @RequestBody PreguntaPostModel model) {
 		PreguntaConID editar = repositorio.findById(id).map(edt -> {
 			
 			// Para las clases hijas

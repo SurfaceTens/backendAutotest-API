@@ -6,25 +6,20 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
-import com.dim.autotestAPI.REST.models.ExamenModel;
-import com.dim.autotestAPI.REST.models.ExamenModel;
+import com.dim.autotestAPI.REST.models.ExamenPostModel;
+import com.dim.autotestAPI.REST.models.ExamenPostModel;
 import com.dim.autotestAPI.entidades.ExamenConID;
 import com.dim.autotestAPI.entidades.ExamenConID;
 import com.dim.autotestAPI.REST.controllers.ExamenController;
 
 @Component
-public class ExamenAssembler implements RepresentationModelAssembler<ExamenConID, ExamenModel> {
+public class ExamenPostAssembler implements RepresentationModelAssembler<ExamenConID, ExamenPostModel> {
 	
 	@Override
-	public ExamenModel toModel(ExamenConID entity) {
-		ExamenModel model = new ExamenModel();
-		model.setId(entity.getId());
+	public ExamenPostModel toModel(ExamenConID entity) {
+		ExamenPostModel model = new ExamenPostModel();
 		model.setFecha(entity.getFecha());
 		
-		// Para sacar conclusiones de la entidad
-		int numPreguntas = entity.getPreguntas() != null ? entity.getPreguntas().size() : 0;
-		model.setNumPreguntas(numPreguntas);
-
 		// Para la relacion
 //		model.add(
 //				linkTo(methodOn(ExamenController.class).one(((ExamenConID) entity).getId())).withSelfRel(),
@@ -34,11 +29,9 @@ public class ExamenAssembler implements RepresentationModelAssembler<ExamenConID
 		return model;
 	}
 	
-	public ExamenConID toEntity(ExamenModel model) {
+	public ExamenConID toEntity(ExamenPostModel model) {
 		ExamenConID entity = new ExamenConID();
-		entity.setId(model.getId());
 		entity.setFecha(model.getFecha());
-		entity.setAlumno(model.getAlumno());
 		
 		// Para la releacion
 //		Preguntas

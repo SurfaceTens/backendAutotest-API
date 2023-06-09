@@ -22,7 +22,6 @@ public class ExamenListAssembler implements RepresentationModelAssembler<ExamenC
 		ExamenModel model = new ExamenModel();
 		model.setId(entity.getId());
 		model.setFecha(entity.getFecha());
-		model.setAlumno(entity.getAlumno());
 		
 		// Para sacar conclusiones de la entidad
 		int numPreguntas = entity.getPreguntas() != null ? entity.getPreguntas().size() : 0;

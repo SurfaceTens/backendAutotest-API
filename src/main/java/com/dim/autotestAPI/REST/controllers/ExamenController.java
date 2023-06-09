@@ -21,10 +21,13 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.dim.autotestAPI.REST.assemblers.ExamenAssembler;
 import com.dim.autotestAPI.REST.assemblers.ExamenListAssembler;
+import com.dim.autotestAPI.REST.assemblers.ExamenPostAssembler;
 import com.dim.autotestAPI.REST.assemblers.AlumnoListAssembler;
+import com.dim.autotestAPI.REST.assemblers.AlumnoPostAssembler;
 import com.dim.autotestAPI.REST.excepciones.RegisterNotFoundException;
 import com.dim.autotestAPI.REST.models.AlumnoModel;
 import com.dim.autotestAPI.REST.models.ExamenModel;
+import com.dim.autotestAPI.REST.models.ExamenPostModel;
 import com.dim.autotestAPI.entidades.AlumnoConID;
 import com.dim.autotestAPI.entidades.ExamenConID;
 import com.dim.autotestAPI.repositorios.AlumnoRepositorio;
@@ -39,14 +42,16 @@ public class ExamenController {
 	private final ExamenRepositorio repositorio;
 	private final AlumnoRepositorio alRepositorio;
 	private final ExamenAssembler assembler;
+	private final ExamenPostAssembler postAssembler;
 	private final ExamenListAssembler listaAssembler;
 	private final AlumnoListAssembler alListaAssembler;
 
-	ExamenController(ExamenRepositorio repositorio, ExamenAssembler assembler, AlumnoRepositorio alRepositorio,
+	ExamenController(ExamenRepositorio repositorio, ExamenAssembler assembler, ExamenPostAssembler postAssembler, AlumnoRepositorio alRepositorio,
 			ExamenListAssembler listaAssembler, AlumnoListAssembler alListaAssembler) {
 		this.repositorio = repositorio;
 		this.alRepositorio = alRepositorio;
 		this.assembler = assembler;
+		this.postAssembler = postAssembler;
 		this.alListaAssembler = alListaAssembler;
 		this.listaAssembler = listaAssembler;
 	}
@@ -63,15 +68,15 @@ public class ExamenController {
 		return listaAssembler.toCollection(repositorio.findAll());
 	}
 	
-	@PostMapping // Post o no post en el model?
-	public ExamenModel add(@RequestBody ExamenModel model) {
-		ExamenConID post = repositorio.save(assembler.toEntity(model));
+	@PostMapping 
+	public ExamenModel add(@RequestBody ExamenPostModel model) {
+		ExamenConID post = repositorio.save(postAssembler.toEntity(model));
 		// Los log
 //		log.info("Añadido " + post);
 		return assembler.toModel(post);
 	}
 	
-	@PutMapping("{id}") // Post o no post en el model?
+	@PutMapping("{id}")
 	public ExamenModel edit(@PathVariable Long id, @RequestBody ExamenModel model) {
 		  
 		ExamenConID editar = repositorio.findById(id).map(edt -> {
