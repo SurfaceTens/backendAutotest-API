@@ -9,7 +9,7 @@
         <table name="PREGUNTAS" />
         <inheritance strategy="SINGLE_TABLE" />
         <discriminator-value>null</discriminator-value>
-        <discriminator-column name="identificador_pregunta" />
+        <discriminator-column name="adjunto" />
         <attributes>
             <id name="id">
                 <generated-value strategy="IDENTITY" />

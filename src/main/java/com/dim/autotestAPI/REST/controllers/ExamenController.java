@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import com.dim.autotestAPI.REST.assemblers.ExamenAssembler;
 import com.dim.autotestAPI.REST.assemblers.ExamenListAssembler;
 import com.dim.autotestAPI.REST.assemblers.ExamenPostAssembler;
+import com.dim.autotestAPI.REST.assemblers.AlumnoAssembler;
 import com.dim.autotestAPI.REST.assemblers.AlumnoListAssembler;
 import com.dim.autotestAPI.REST.assemblers.AlumnoPostAssembler;
 import com.dim.autotestAPI.REST.excepciones.RegisterNotFoundException;
@@ -44,15 +45,15 @@ public class ExamenController {
 	private final ExamenAssembler assembler;
 	private final ExamenPostAssembler postAssembler;
 	private final ExamenListAssembler listaAssembler;
-	private final AlumnoListAssembler alListaAssembler;
+	private final AlumnoAssembler alAssembler;
 
 	ExamenController(ExamenRepositorio repositorio, ExamenAssembler assembler, ExamenPostAssembler postAssembler, AlumnoRepositorio alRepositorio,
-			ExamenListAssembler listaAssembler, AlumnoListAssembler alListaAssembler) {
+			ExamenListAssembler listaAssembler, AlumnoAssembler alAssembler) {
 		this.repositorio = repositorio;
 		this.alRepositorio = alRepositorio;
 		this.assembler = assembler;
 		this.postAssembler = postAssembler;
-		this.alListaAssembler = alListaAssembler;
+		this.alAssembler = alAssembler;
 		this.listaAssembler = listaAssembler;
 	}
 	

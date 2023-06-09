@@ -7,8 +7,6 @@ import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
 import com.dim.autotestAPI.REST.models.ExamenPostModel;
-import com.dim.autotestAPI.REST.models.ExamenPostModel;
-import com.dim.autotestAPI.entidades.ExamenConID;
 import com.dim.autotestAPI.entidades.ExamenConID;
 import com.dim.autotestAPI.REST.controllers.ExamenController;
 
@@ -21,11 +19,11 @@ public class ExamenPostAssembler implements RepresentationModelAssembler<ExamenC
 		model.setFecha(entity.getFecha());
 		
 		// Para la relacion
-//		model.add(
-//				linkTo(methodOn(ExamenController.class).one(((ExamenConID) entity).getId())).withSelfRel(),
-//		     	linkTo(methodOn(ExamenController.class).preguntasExamen(entity.getId())).withRel("preguntas")
-//     			linkTo(methodOn(ExamenController.class).alumnosExamen(entity.getId())).withRel("alumnos")
-//				);
+		model.add(
+				linkTo(methodOn(ExamenController.class).one(((ExamenConID) entity).getId())).withSelfRel(),
+				linkTo(methodOn(ExamenController.class).one(entity.getId())).withRel("alumno")
+//		     	linkTo(methodOn(ExamenController.class).preguntas(entity.getId())).withRel("preguntas") // No hace falta este endpoint por ahora
+				);
 		return model;
 	}
 	
@@ -34,10 +32,7 @@ public class ExamenPostAssembler implements RepresentationModelAssembler<ExamenC
 		entity.setFecha(model.getFecha());
 		
 		// Para la releacion
-//		Preguntas
-//		Alumnos
-		
-		
+		// No necesitamos nada aqui.
 		return entity;
 	}
 

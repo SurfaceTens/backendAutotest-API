@@ -97,7 +97,6 @@ public class PreguntaController {
 //				repositorio.actualizarVideo(model.getVideoURL(), id);
 //				 edt = vid;
 //			}
-			edt.setAdjunto(model.getAdjunto());
 			
 			// Resto de atributos
 			edt.setTematica(model.getTematica());

@@ -11,35 +11,39 @@ import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
 import com.dim.autotestAPI.REST.models.ExamenModel;
+import com.dim.autotestAPI.entidades.AlumnoConID;
 import com.dim.autotestAPI.entidades.ExamenConID;
+
+import es.mde.acing.utils.Alumno;
+
 import com.dim.autotestAPI.REST.controllers.ExamenController;
 
 @Component
-public class ExamenListAssembler implements RepresentationModelAssembler<ExamenConID, ExamenModel> {
+public class ExamenListAssembler<T extends Alumno> implements RepresentationModelAssembler<T, ExamenModel> {
 	
 	@Override
-	public ExamenModel toModel(ExamenConID entity) {
+	public ExamenModel toModel(T entity) {
 		ExamenModel model = new ExamenModel();
-		model.setId(entity.getId());
-		model.setFecha(entity.getFecha());
+		model.setId(((ExamenModel) entity).getId());
+		model.setFecha(((ExamenModel) entity).getFecha());
 		
 		// Para sacar conclusiones de la entidad
 		int numPreguntas = entity.getPreguntas() != null ? entity.getPreguntas().size() : 0;
 		model.setNumPreguntas(numPreguntas);
 
 		// Para la relacion
-//		model.add(
-//				linkTo(methodOn(ExamenController.class).one(((ExamenConID) entity).getId())).withSelfRel(),
-//		     	linkTo(methodOn(ExamenController.class).preguntasExamen(entity.getId())).withRel("preguntas")
-//     			linkTo(methodOn(ExamenController.class).alumnosExamen(entity.getId())).withRel("alumnos")
-//				);
+		model.add(
+				linkTo(methodOn(ExamenController.class).one(((ExamenConID) entity).getId())).withSelfRel(),
+				linkTo(methodOn(ExamenController.class).one(((AlumnoConID) entity).getId())).withRel("alumno")
+//		     	linkTo(methodOn(ExamenController.class).preguntas(entity.getId())).withRel("preguntas") // No hace falta este endpoint por ahora
+				);
 		return model;
 	}
 	
 	
 	
 	
-	public CollectionModel<ExamenModel> toCollection(List<ExamenConID> lista) {
+	public CollectionModel<ExamenModel> toCollection(List<T> lista) {
 		CollectionModel<ExamenModel> collection = CollectionModel.of(
 				lista.stream().map(this::toModel).collect(Collectors.toList())
 				);	

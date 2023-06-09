@@ -27,11 +27,11 @@ public class AlumnoAssembler implements RepresentationModelAssembler<AlumnoConID
 		model.setNumExamenes(numExamenes);
 
 		// Para la relacion
-//		model.add(
-//				linkTo(methodOn(AlumnoController.class).one(((AlumnoConID) entity).getId())).withSelfRel(),
-//		     	linkTo(methodOn(AlumnoController.class).examenesAlumno(entity.getId())).withRel("examenes"),
-//		     	linkTo(methodOn(AlumnoController.class).preguntasAlumno(entity.getId())).withRel("preguntas")
-//				);
+		model.add(
+				linkTo(methodOn(AlumnoController.class).one(((AlumnoConID) entity).getId())).withSelfRel(),
+		     	linkTo(methodOn(AlumnoController.class).examenes(entity.getId())).withRel("examenes"),
+		     	linkTo(methodOn(AlumnoController.class).preguntas(entity.getId())).withRel("preguntas")
+				);
 		return model;
 	}
 	
@@ -45,10 +45,7 @@ public class AlumnoAssembler implements RepresentationModelAssembler<AlumnoConID
 		entity.setId(model.getId());
 		
 		// Para la releacion
-//		Examenes
-//		Preguntas
-		
-		
+		// No necesitamos nada aqui.
 		return entity;
 	}
 

@@ -31,7 +31,6 @@ public class PreguntaAssembler implements RepresentationModelAssembler<PreguntaC
 		model.setOpcionIncorrecta2(entity.getOpcionInCorrecta2());
 		model.setOpcionIncorrecta3(entity.getOpcionInCorrecta3());
 		model.setOpcionIncorrecta4(entity.getOpcionInCorrecta4());
-		model.setAdjunto(null);
 
 		// Para las clases hijas
 		if (entity.getAdjunto() == Adjunto.video) {
@@ -49,10 +48,10 @@ public class PreguntaAssembler implements RepresentationModelAssembler<PreguntaC
 		model.setNumExamenes(numExamenes);
 
 		// Para la relacion
-//		model.add(
-//				linkTo(methodOn(PreguntaController.class).one(((PreguntaConID) entity).getId())).withSelfRel(),
-//		     	linkTo(methodOn(PreguntaController.class).examenesPregunta(entity.getId())).withRel("examenes"),
-//				);
+		model.add(
+				linkTo(methodOn(PreguntaController.class).one(((PreguntaConID) entity).getId())).withSelfRel()
+//		     	linkTo(methodOn(PreguntaController.class).examenes(entity.getId())).withRel("examenes") // No hace falta este endpoint por ahora
+				);
 		return model;
 	}
 
@@ -63,14 +62,12 @@ public class PreguntaAssembler implements RepresentationModelAssembler<PreguntaC
 		switch (model.getAdjunto()) {
 			case imagen: {
 				PreguntaConImagen imagen = new PreguntaConImagen();
-				imagen.setAdjunto(Adjunto.imagen);
 				imagen.setImagenURL(model.getImagenURL());
 				entity = imagen;
 				break;
 			}
 			case video: {
 				PreguntaConVideo video = new PreguntaConVideo();
-				video.setAdjunto(Adjunto.video);
 				video.setVideoURL(model.getVideoURL());
 				entity = video;
 				break;
@@ -90,8 +87,7 @@ public class PreguntaAssembler implements RepresentationModelAssembler<PreguntaC
 		entity.setAlumno(model.getAlumno());
 
 		// Para la releacion
-//		Examenes
-
+		// No necesitamos nada aqui.
 		return entity;
 	}
 

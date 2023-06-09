@@ -23,6 +23,7 @@ import com.dim.autotestAPI.REST.assemblers.AlumnoAssembler;
 import com.dim.autotestAPI.REST.assemblers.AlumnoListAssembler;
 import com.dim.autotestAPI.REST.assemblers.AlumnoPostAssembler;
 import com.dim.autotestAPI.REST.assemblers.ExamenListAssembler;
+import com.dim.autotestAPI.REST.assemblers.PreguntaListAssembler;
 import com.dim.autotestAPI.REST.excepciones.RegisterNotFoundException;
 import com.dim.autotestAPI.REST.models.AlumnoModel;
 import com.dim.autotestAPI.REST.models.AlumnoPostModel;
@@ -41,15 +42,17 @@ public class AlumnoController {
 	private final AlumnoPostAssembler postAssembler;
 	private final AlumnoListAssembler listaAssembler;
 	private final ExamenListAssembler exListaAssembler;
+	private final PreguntaListAssembler pregListaAssembler;
 
 	AlumnoController(AlumnoRepositorio repositorio, AlumnoAssembler assembler, AlumnoPostAssembler postAssembler, ExamenRepositorio exRepositorio,
-			ExamenListAssembler exListaAssembler, AlumnoListAssembler listaAssembler) {
+			ExamenListAssembler exListaAssembler, AlumnoListAssembler listaAssembler, PreguntaListAssembler pregListaAssembler) {
 		this.repositorio = repositorio;
 		this.exRepositorio = exRepositorio;
 		this.assembler = assembler;
 		this.postAssembler = postAssembler;
 		this.exListaAssembler = exListaAssembler;
 		this.listaAssembler = listaAssembler;
+		this.pregListaAssembler = pregListaAssembler;
 	}
 
 	@GetMapping("{id}")
@@ -62,6 +65,22 @@ public class AlumnoController {
 	@GetMapping
 	public CollectionModel<AlumnoModel> all() {
 		return listaAssembler.toCollection(repositorio.findAll());
+	}
+	
+	@SuppressWarnings("unchecked") // No se podia quitar el warning de otro modo.
+	@GetMapping("{id}/examenes")
+	public CollectionModel<AlumnoModel> examenes(@PathVariable Long id) {
+		AlumnoConID origen = repositorio.findById(id)
+				.orElseThrow(() -> new RegisterNotFoundException(id, "Examen"));
+	    return exListaAssembler.toCollection(origen.getExamenes());
+	}
+	
+	@SuppressWarnings("unchecked") // No se podia quitar el warning de otro modo.
+	@GetMapping("{id}/preguntas")
+	public CollectionModel<AlumnoModel> preguntas(@PathVariable Long id) {
+		AlumnoConID origen = repositorio.findById(id)
+				.orElseThrow(() -> new RegisterNotFoundException(id, "Pregunta"));
+	    return pregListaAssembler.toCollection(origen.getExamenes());
 	}
 	
 	@PostMapping

@@ -12,23 +12,21 @@ import org.springframework.stereotype.Component;
 
 import com.dim.autotestAPI.REST.models.ExamenModel;
 import com.dim.autotestAPI.REST.models.PreguntaModel;
-import com.dim.autotestAPI.entidades.ExamenConID;
 import com.dim.autotestAPI.entidades.PreguntaConID;
-import com.dim.autotestAPI.entidades.PreguntaConImagen;
-import com.dim.autotestAPI.entidades.PreguntaConVideo;
 import com.dim.autotestAPI.REST.controllers.PreguntaController;
 
 import es.mde.acing.utils.ConImagen;
 import es.mde.acing.utils.ConVideo;
+import es.mde.acing.utils.Pregunta;
 import es.mde.acing.utils.PreguntaImpl.Adjunto;
 
 @Component
-public class PreguntaListAssembler implements RepresentationModelAssembler<PreguntaConID, PreguntaModel> {
+public class PreguntaListAssembler<T extends Pregunta> implements RepresentationModelAssembler<T, PreguntaModel> {
 	
 	@Override
-	public PreguntaModel toModel(PreguntaConID entity) {
+	public PreguntaModel toModel(T entity) {
 		PreguntaModel model = new PreguntaModel();
-		model.setId(entity.getId());
+		model.setId(((ExamenModel) entity).getId());
 		model.setTematica(entity.getTematica());
 		model.setDificultad(entity.getDificultad());
 		model.setEnunciado(entity.getEnunciado());
@@ -37,7 +35,6 @@ public class PreguntaListAssembler implements RepresentationModelAssembler<Pregu
 		model.setOpcionIncorrecta2(entity.getOpcionInCorrecta2());
 		model.setOpcionIncorrecta3(entity.getOpcionInCorrecta3());
 		model.setOpcionIncorrecta4(entity.getOpcionInCorrecta4());
-		model.setAdjunto(null);
 
 		// Para las clases hijas
 		if (entity.getAdjunto() == Adjunto.video) {
@@ -53,14 +50,14 @@ public class PreguntaListAssembler implements RepresentationModelAssembler<Pregu
 		model.setNumExamenes(numExamenes);
 
 		// Para la relacion
-//		model.add(
-//				linkTo(methodOn(PreguntaController.class).one(((PreguntaConID) entity).getId())).withSelfRel(),
-//		     	linkTo(methodOn(PreguntaController.class).examenesPregunta(entity.getId())).withRel("examenes"),
-//				);
+		model.add(
+				linkTo(methodOn(PreguntaController.class).one(((PreguntaConID) entity).getId())).withSelfRel()
+//		     	linkTo(methodOn(PreguntaController.class).examenes(((ExamenConID) entity).getId())).withRel("examenes") // No hace falta este endpoint por ahora
+				);
 		return model;
 	}
 
-	public CollectionModel<PreguntaModel> toCollection(List<PreguntaConID> lista) {
+	public CollectionModel<PreguntaModel> toCollection(List<T> lista) {
 		CollectionModel<PreguntaModel> collection = CollectionModel.of(
 				lista.stream().map(this::toModel).collect(Collectors.toList())
 				);	

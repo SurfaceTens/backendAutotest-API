@@ -12,7 +12,6 @@ import com.dim.autotestAPI.entidades.PreguntaConImagen;
 import com.dim.autotestAPI.entidades.PreguntaConVideo;
 import com.dim.autotestAPI.REST.controllers.PreguntaController;
 
-import es.mde.acing.utils.Alumno;
 import es.mde.acing.utils.ConImagen;
 import es.mde.acing.utils.ConVideo;
 import es.mde.acing.utils.PreguntaImpl.Adjunto;
@@ -42,10 +41,10 @@ public class PreguntaPostAssembler implements RepresentationModelAssembler<Pregu
 		}
 
 		// Para la relacion
-//				model.add(
-//						linkTo(methodOn(PreguntaController.class).one(((PreguntaConID) entity).getId())).withSelfRel(),
-//				     	linkTo(methodOn(PreguntaController.class).examenesPregunta(entity.getId())).withRel("examenes"),
-//						);
+		model.add(
+				linkTo(methodOn(PreguntaController.class).one(((PreguntaConID) entity).getId())).withSelfRel()
+//		     	linkTo(methodOn(PreguntaController.class).examenes(entity.getId())).withRel("examenes") // No hace falta este endpoint por ahora
+				);
 		return model;
 	}
 
@@ -56,14 +55,12 @@ public class PreguntaPostAssembler implements RepresentationModelAssembler<Pregu
 		switch (model.getAdjunto()) {
 		case imagen: {
 			PreguntaConImagen imagen = new PreguntaConImagen();
-			imagen.setAdjunto(Adjunto.imagen);
 			imagen.setImagenURL(model.getImagenURL());
 			entity = imagen;
 			break;
 		}
 		case video: {
 			PreguntaConVideo video = new PreguntaConVideo();
-			video.setAdjunto(Adjunto.video);
 			video.setVideoURL(model.getVideoURL());
 			entity = video;
 			break;
@@ -81,8 +78,7 @@ public class PreguntaPostAssembler implements RepresentationModelAssembler<Pregu
 		entity.setAlumno(model.getAlumno());
 
 		// Para la releacion
-//		Examenes
-
+		// No necesitamos nada aqui.
 		return entity;
 	}
 
