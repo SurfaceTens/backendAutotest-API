@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import com.dim.autotestAPI.REST.assemblers.ExamenAssembler;
 import com.dim.autotestAPI.REST.assemblers.ExamenListAssembler;
 import com.dim.autotestAPI.REST.assemblers.ExamenPostAssembler;
+import com.dim.autotestAPI.REST.assemblers.PreguntaAssembler;
 import com.dim.autotestAPI.REST.assemblers.AlumnoAssembler;
 import com.dim.autotestAPI.REST.assemblers.AlumnoListAssembler;
 import com.dim.autotestAPI.REST.assemblers.AlumnoPostAssembler;
@@ -49,9 +50,10 @@ public class ExamenController {
 	private final ExamenPostAssembler postAssembler;
 	private final ExamenListAssembler listaAssembler;
 	private final AlumnoAssembler alAssembler;
+	private final PreguntaAssembler preguntaAssembler;
 
 	ExamenController(ExamenRepositorio repositorio, ExamenAssembler assembler, ExamenPostAssembler postAssembler, AlumnoRepositorio alRepositorio,
-			PreguntaExamenRepositorio relacionRepositorio, ExamenListAssembler listaAssembler, AlumnoAssembler alAssembler) {
+			PreguntaExamenRepositorio relacionRepositorio, ExamenListAssembler listaAssembler, AlumnoAssembler alAssembler, PreguntaAssembler preguntaAssembler) {
 		this.repositorio = repositorio;
 		this.alRepositorio = alRepositorio;
 		this.relacionRepositorio = relacionRepositorio;
@@ -59,6 +61,7 @@ public class ExamenController {
 		this.postAssembler = postAssembler;
 		this.alAssembler = alAssembler;
 		this.listaAssembler = listaAssembler;
+		this.preguntaAssembler = preguntaAssembler;
 	}
 	
 	@GetMapping("{id}")
@@ -82,9 +85,9 @@ public class ExamenController {
 //	        for (PreguntaModel preguntaModel : model.getPreguntas()) {
 //	            PreguntaExamenConID preguntaExamen = new PreguntaExamenConID();
 //	            preguntaExamen.setExamen(post);
-//	            preguntaExamen.setPregunta(preguntaModel);
-//	            preguntaExamen.setRespuesta(preguntaModel.getRespuesta());
-//	            preguntaExamen.setAcertada(preguntaModel.isAcertada());
+//	            preguntaExamen.setPregunta(preguntaAssembler.toEntity(preguntaModel));
+//	            preguntaExamen.setAcertada(false);
+//	            preguntaExamen.setRespuesta(0);
 //	            relacionRepositorio.save(preguntaExamen);
 //	        }
 //	    }

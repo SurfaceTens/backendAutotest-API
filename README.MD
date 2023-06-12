@@ -23,5 +23,5 @@
         ├── GET: one(void): ExamenModel
         ├── POST: add(ExamenPostModel): ExamenModel
         ├── PUT: edit(ExamenPostModel): ExamenModel
-        └── DEL: delete/{id}(Long): HttpStatus
+        └── DEL: delete/{id}(Long): HttpStatu
 ```
