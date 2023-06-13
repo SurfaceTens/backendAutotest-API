@@ -10,6 +10,7 @@ import com.dim.autotestAPI.REST.models.PreguntaModel;
 import com.dim.autotestAPI.entidades.PreguntaConID;
 import com.dim.autotestAPI.entidades.PreguntaConImagen;
 import com.dim.autotestAPI.entidades.PreguntaConVideo;
+import com.dim.autotestAPI.REST.controllers.ExamenController;
 import com.dim.autotestAPI.REST.controllers.PreguntaController;
 
 import es.mde.acing.utils.ConImagen;
@@ -49,8 +50,8 @@ public class PreguntaAssembler implements RepresentationModelAssembler<PreguntaC
 
 		// Para la relacion
 		model.add(
-				linkTo(methodOn(PreguntaController.class).one(((PreguntaConID) entity).getId())).withSelfRel()
-//		     	linkTo(methodOn(PreguntaController.class).examenes(entity.getId())).withRel("examenes") // No hace falta este endpoint por ahora
+				linkTo(methodOn(PreguntaController.class).one(((PreguntaConID) entity).getId())).withSelfRel(),
+		     	linkTo(methodOn(ExamenController.class).one(entity.getId())).withRel("examenes")
 				);
 		return model;
 	}
@@ -84,10 +85,10 @@ public class PreguntaAssembler implements RepresentationModelAssembler<PreguntaC
 		entity.setOpcionInCorrecta2(model.getOpcionIncorrecta2());
 		entity.setOpcionInCorrecta3(model.getOpcionIncorrecta3());
 		entity.setOpcionInCorrecta4(model.getOpcionIncorrecta4());
-		entity.setAlumno(model.getAlumno());
 
 		// Para la releacion
-		// No necesitamos nada aqui.
+		entity.setAlumno(model.getAlumno());
+		entity.setExamenes(model.getExamenes());
 		return entity;
 	}
 

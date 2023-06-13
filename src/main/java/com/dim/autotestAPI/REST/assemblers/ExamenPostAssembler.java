@@ -8,7 +8,9 @@ import org.springframework.stereotype.Component;
 
 import com.dim.autotestAPI.REST.models.ExamenPostModel;
 import com.dim.autotestAPI.entidades.ExamenConID;
+import com.dim.autotestAPI.REST.controllers.AlumnoController;
 import com.dim.autotestAPI.REST.controllers.ExamenController;
+import com.dim.autotestAPI.REST.controllers.PreguntaController;
 
 @Component
 public class ExamenPostAssembler implements RepresentationModelAssembler<ExamenConID, ExamenPostModel> {
@@ -21,8 +23,8 @@ public class ExamenPostAssembler implements RepresentationModelAssembler<ExamenC
 		// Para la relacion
 		model.add(
 				linkTo(methodOn(ExamenController.class).one(((ExamenConID) entity).getId())).withSelfRel(),
-				linkTo(methodOn(ExamenController.class).one(entity.getId())).withRel("alumno")
-//		     	linkTo(methodOn(ExamenController.class).preguntas(entity.getId())).withRel("preguntas") // No hace falta este endpoint por ahora
+				linkTo(methodOn(AlumnoController.class).one(entity.getId())).withRel("alumno"),
+		     	linkTo(methodOn(PreguntaController.class).all()).withRel("preguntas")
 				);
 		return model;
 	}
@@ -30,6 +32,8 @@ public class ExamenPostAssembler implements RepresentationModelAssembler<ExamenC
 	public ExamenConID toEntity(ExamenPostModel model) {
 		ExamenConID entity = new ExamenConID();
 		entity.setFecha(model.getFecha());
+		entity.setAlumno(model.getAlumno());
+		entity.setPreguntas(model.getPreguntas());
 		
 		// Para la releacion
 		// No necesitamos nada aqui.

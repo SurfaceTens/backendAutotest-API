@@ -23,6 +23,7 @@ import com.dim.autotestAPI.REST.assemblers.ExamenAssembler;
 import com.dim.autotestAPI.REST.assemblers.ExamenListAssembler;
 import com.dim.autotestAPI.REST.assemblers.ExamenPostAssembler;
 import com.dim.autotestAPI.REST.assemblers.PreguntaAssembler;
+import com.dim.autotestAPI.REST.assemblers.PreguntaExamenAssembler;
 import com.dim.autotestAPI.REST.assemblers.AlumnoAssembler;
 import com.dim.autotestAPI.REST.assemblers.AlumnoListAssembler;
 import com.dim.autotestAPI.REST.assemblers.AlumnoPostAssembler;
@@ -38,6 +39,8 @@ import com.dim.autotestAPI.repositorios.AlumnoRepositorio;
 import com.dim.autotestAPI.repositorios.ExamenRepositorio;
 import com.dim.autotestAPI.repositorios.PreguntaExamenRepositorio;
 
+import es.mde.acing.utils.PreguntaExamen;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/examenes")
@@ -51,9 +54,10 @@ public class ExamenController {
 	private final ExamenListAssembler listaAssembler;
 	private final AlumnoAssembler alAssembler;
 	private final PreguntaAssembler preguntaAssembler;
+	private final PreguntaExamenAssembler preguntaExamenAssembler;
 
 	ExamenController(ExamenRepositorio repositorio, ExamenAssembler assembler, ExamenPostAssembler postAssembler, AlumnoRepositorio alRepositorio,
-			PreguntaExamenRepositorio relacionRepositorio, ExamenListAssembler listaAssembler, AlumnoAssembler alAssembler, PreguntaAssembler preguntaAssembler) {
+			PreguntaExamenRepositorio relacionRepositorio, ExamenListAssembler listaAssembler, AlumnoAssembler alAssembler, PreguntaAssembler preguntaAssembler, PreguntaExamenAssembler preguntaExamenAssembler) {
 		this.repositorio = repositorio;
 		this.alRepositorio = alRepositorio;
 		this.relacionRepositorio = relacionRepositorio;
@@ -62,6 +66,7 @@ public class ExamenController {
 		this.alAssembler = alAssembler;
 		this.listaAssembler = listaAssembler;
 		this.preguntaAssembler = preguntaAssembler;
+		this.preguntaExamenAssembler = preguntaExamenAssembler;
 	}
 	
 	@GetMapping("{id}")
@@ -82,7 +87,7 @@ public class ExamenController {
 		
 		// Guardar las relaciones con las preguntas
 //	    if (model.getPreguntas() != null && !model.getPreguntas().isEmpty()) {
-//	        for (PreguntaModel preguntaModel : model.getPreguntas()) {
+//	        for (PreguntaExamen examenModel : model.getPreguntas()) {
 //	            PreguntaExamenConID preguntaExamen = new PreguntaExamenConID();
 //	            preguntaExamen.setExamen(post);
 //	            preguntaExamen.setPregunta(preguntaAssembler.toEntity(preguntaModel));
@@ -114,7 +119,7 @@ public class ExamenController {
 //		log.info("Actualizado " + editar);
 		return assembler.toModel(editar);
 }
-	
+
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable Long id) {
 		// Los log

@@ -1,19 +1,24 @@
 package com.dim.autotestAPI.REST.models;
 
 import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import com.dim.autotestAPI.entidades.AlumnoConID;
+
+import es.mde.acing.utils.PreguntaExamen;
 
 @Relation(itemRelation = "examen")
 public class ExamenModel extends RepresentationModel<ExamenModel> {
 
 	private Long id;
 	private LocalDate fecha;
-	
+
 	// Relaciones
 	private AlumnoConID alumno;
+	private List<PreguntaExamen> preguntas;
 	private int numPreguntas;
 
 	public Long getId() {
@@ -46,6 +51,14 @@ public class ExamenModel extends RepresentationModel<ExamenModel> {
 
 	public void setNumPreguntas(int numPreguntas) {
 		this.numPreguntas = numPreguntas;
+	}
+
+	public List<PreguntaExamen> getPreguntas() {
+		return preguntas;
+	}
+
+	public void setPreguntas(List<PreguntaExamen> preguntas) {
+		this.preguntas = preguntas;
 	}
 
 }
