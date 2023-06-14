@@ -6,9 +6,6 @@
 
     <entity class="com.dim.autotestAPI.entidades.ExamenConID" access="FIELD">
         <table name="EXAMENES" />
-        <inheritance strategy="SINGLE_TABLE" />
-        <discriminator-value>null</discriminator-value>
-        <discriminator-column name="identificador_examen" />
         <attributes>
             <id name="id">
                 <generated-value strategy="IDENTITY" />

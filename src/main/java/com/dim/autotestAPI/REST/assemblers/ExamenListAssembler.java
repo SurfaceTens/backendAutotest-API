@@ -14,11 +14,14 @@ import com.dim.autotestAPI.REST.models.ExamenModel;
 import com.dim.autotestAPI.entidades.AlumnoConID;
 import com.dim.autotestAPI.entidades.ExamenConID;
 
-import es.mde.acing.utils.Alumno;
+import es.mde.acing.utils.Examen;
+
+import com.dim.autotestAPI.REST.controllers.AlumnoController;
 import com.dim.autotestAPI.REST.controllers.ExamenController;
+import com.dim.autotestAPI.REST.controllers.PreguntaController;
 
 @Component
-public class ExamenListAssembler<T extends Alumno> implements RepresentationModelAssembler<T, ExamenModel> {
+public class ExamenListAssembler<T extends Examen> implements RepresentationModelAssembler<T, ExamenModel> {
 	
 	@Override
 	public ExamenModel toModel(T entity) {
@@ -32,8 +35,8 @@ public class ExamenListAssembler<T extends Alumno> implements RepresentationMode
 		// Para la relacion
 		model.add(
 				linkTo(methodOn(ExamenController.class).one(((ExamenConID) entity).getId())).withSelfRel(),
-				linkTo(methodOn(ExamenController.class).one(((AlumnoConID) entity).getId())).withRel("alumno")
-//		     	linkTo(methodOn(ExamenController.class).preguntas(((PreguntaConID) entity).getId())).withRel("preguntas") // No hace falta este endpoint por ahora
+				linkTo(methodOn(AlumnoController.class).one(((AlumnoConID) entity.getAlumno()).getId())).withRel("alumno"),
+				linkTo(methodOn(ExamenController.class).preguntasExamen(((ExamenConID) entity).getId())).withRel("preguntas")
 				);
 		return model;
 	}

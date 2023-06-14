@@ -6,17 +6,19 @@ import org.springframework.hateoas.server.core.Relation;
 import com.dim.autotestAPI.entidades.ExamenConID;
 import com.dim.autotestAPI.entidades.PreguntaConID;
 
+import es.mde.acing.utils.Pregunta;
+
 @Relation(itemRelation = "preguntaexamen")
 public class PreguntaExamenModel extends RepresentationModel<PreguntaExamenModel> {
 
 	private Long id;
 	private String respuesta;
 	private String correcta;
+	private String[] incorrectas;
 	private boolean acertada;
 
 	// Relaciones
-	private ExamenConID examen;
-	private PreguntaConID pregunta;
+	private String enunciado;
 
 	public Long getId() {
 		return id;
@@ -50,20 +52,20 @@ public class PreguntaExamenModel extends RepresentationModel<PreguntaExamenModel
 		this.acertada = acertada;
 	}
 
-	public ExamenConID getExamen() {
-		return examen;
+	public String getEnunciado() {
+		return enunciado;
 	}
 
-	public void setExamen(ExamenConID examen) {
-		this.examen = examen;
+	public void setEnunciado(String enunciado) {
+		this.enunciado = enunciado;
 	}
 
-	public PreguntaConID getPregunta() {
-		return pregunta;
+	public String[] getIncorrectas() {
+		return incorrectas;
 	}
 
-	public void setPregunta(PreguntaConID pregunta) {
-		this.pregunta = pregunta;
+	public void setIncorrectas(String[] incorrectas) {
+		this.incorrectas = incorrectas;
 	}
 
 }

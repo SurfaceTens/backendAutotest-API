@@ -5,11 +5,17 @@
                  version="2.2">
 
     <entity class="com.dim.autotestAPI.entidades.PreguntaExamenConID" access="FIELD">
-        <table name="PREGUNTA_EXAMEN" />
+        <table name="PREGUNTA_EXAMEN" >
+			<unique-constraint name="examen_pregunta_uk">
+				<column-name>examen_id</column-name>
+				<column-name>pregunta_id</column-name>
+			</unique-constraint>
+        </table>
          <attributes>
             <id name="id">
                 <generated-value strategy="IDENTITY" />
             </id>
         </attributes>
+        
     </entity>
 </entity-mappings>

@@ -1,14 +1,11 @@
 package com.dim.autotestAPI.REST.controllers;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -24,22 +22,15 @@ import com.dim.autotestAPI.REST.assemblers.PreguntaListAssembler;
 import com.dim.autotestAPI.REST.assemblers.PreguntaPostAssembler;
 import com.dim.autotestAPI.REST.assemblers.AlumnoListAssembler;
 import com.dim.autotestAPI.REST.excepciones.RegisterNotFoundException;
-import com.dim.autotestAPI.REST.models.AlumnoModel;
-import com.dim.autotestAPI.REST.models.ExamenModel;
 import com.dim.autotestAPI.REST.models.PreguntaModel;
 import com.dim.autotestAPI.REST.models.PreguntaPostModel;
-import com.dim.autotestAPI.entidades.AlumnoConID;
-import com.dim.autotestAPI.entidades.ExamenConID;
 import com.dim.autotestAPI.entidades.PreguntaConID;
 import com.dim.autotestAPI.entidades.PreguntaConImagen;
 import com.dim.autotestAPI.entidades.PreguntaConVideo;
 import com.dim.autotestAPI.repositorios.AlumnoRepositorio;
 import com.dim.autotestAPI.repositorios.PreguntaRepositorio;
 
-import es.mde.acing.utils.Alumno;
 import es.mde.acing.utils.PreguntaImpl.Adjunto;
-
-import com.dim.autotestAPI.repositorios.PreguntaRepositorio;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -47,19 +38,15 @@ import com.dim.autotestAPI.repositorios.PreguntaRepositorio;
 public class PreguntaController {
 	
 	private final PreguntaRepositorio repositorio;
-	private final AlumnoRepositorio alRepositorio;
 	private final PreguntaAssembler assembler;
 	private final PreguntaPostAssembler postAssembler;
 	private final PreguntaListAssembler listaAssembler;
-	private final AlumnoListAssembler alListaAssembler;
-
+	
 	PreguntaController(PreguntaRepositorio repositorio, PreguntaAssembler assembler, PreguntaPostAssembler postAssembler, AlumnoRepositorio alRepositorio,
 			PreguntaListAssembler listaAssembler, AlumnoListAssembler alListaAssembler) {
 		this.repositorio = repositorio;
-		this.alRepositorio = alRepositorio;
 		this.assembler = assembler;
 		this.postAssembler = postAssembler;
-		this.alListaAssembler = alListaAssembler;
 		this.listaAssembler = listaAssembler;
 	}
 	
@@ -69,6 +56,39 @@ public class PreguntaController {
 				.orElseThrow(() -> new RegisterNotFoundException(id, "Pregunta"));
 		return assembler.toModel(uno);
 	}
+	
+	public CollectionModel<PreguntaModel> getAleatorias(int numPreguntas) {
+	    List<PreguntaConID> preguntas = repositorio.findAll();
+	    int totalPreguntas = preguntas.size();
+	    
+	    if (numPreguntas >= totalPreguntas) {
+	        List<PreguntaModel> preguntasModel = preguntas.stream()
+	                .map(pregunta -> listaAssembler.toModel(pregunta))
+	                .collect(Collectors.toList());
+	        
+	        return listaAssembler.toCollection(preguntasModel);
+	    } else {
+	        List<PreguntaConID> preguntasAleatorias = new ArrayList<>();
+	        Random random = new Random();
+	        
+	        while (preguntasAleatorias.size() < numPreguntas) {
+	            int index = random.nextInt(totalPreguntas);
+	            PreguntaConID pregunta = preguntas.get(index);
+	            
+	            if (!preguntasAleatorias.contains(pregunta)) {
+	                preguntasAleatorias.add(pregunta);
+	            }
+	        }
+	        
+	        List<PreguntaModel> preguntaModels = preguntasAleatorias.stream()
+	                .map(pregunta -> listaAssembler.toModel(pregunta))
+	                .collect(Collectors.toList());
+	        
+	        return listaAssembler.toCollection(preguntaModels);
+	    }
+	}
+
+
 	
 	@GetMapping
 	public CollectionModel<PreguntaModel> all() {
@@ -89,10 +109,10 @@ public class PreguntaController {
 			
 			// Para las clases hijas
 			if (model.getAdjunto() == Adjunto.imagen) {
-				PreguntaConImagen img = new PreguntaConImagen();
+				new PreguntaConImagen();
 				repositorio.actualizarImagen(model.getImagenURL(), id);
 			} else if (model.getAdjunto() == Adjunto.video) {
-				PreguntaConVideo vid = new PreguntaConVideo();
+				new PreguntaConVideo();
 				repositorio.actualizarVideo(model.getVideoURL(), id);
 			}
 			
@@ -118,9 +138,7 @@ public class PreguntaController {
 	
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable Long id) {
-		// Los log
-//	    log.info("Borrada pregunta " + id);
-		PreguntaConID delete = repositorio.findById(id).map(del -> {
+		repositorio.findById(id).map(del -> {
 				repositorio.deleteById(id);	
 				return del;
 			})

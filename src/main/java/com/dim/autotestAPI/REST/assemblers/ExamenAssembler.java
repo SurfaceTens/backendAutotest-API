@@ -7,6 +7,7 @@ import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
 import com.dim.autotestAPI.REST.models.ExamenModel;
+import com.dim.autotestAPI.entidades.AlumnoConID;
 import com.dim.autotestAPI.entidades.ExamenConID;
 import com.dim.autotestAPI.REST.controllers.AlumnoController;
 import com.dim.autotestAPI.REST.controllers.ExamenController;
@@ -27,8 +28,8 @@ public class ExamenAssembler implements RepresentationModelAssembler<ExamenConID
 		// Para la relacion
 		model.add(
 				linkTo(methodOn(ExamenController.class).one(((ExamenConID) entity).getId())).withSelfRel(),
-				linkTo(methodOn(AlumnoController.class).one(entity.getId())).withRel("alumno"),
-		     	linkTo(methodOn(PreguntaController.class).all()).withRel("preguntas")
+				linkTo(methodOn(AlumnoController.class).one(((AlumnoConID) entity.getAlumno()).getId())).withRel("alumno"),
+		     	linkTo(methodOn(ExamenController.class).preguntasExamen(entity.getId())).withRel("preguntas")
 				);
 		return model;
 	}

@@ -9,7 +9,7 @@
 
 			<basic name="respuesta" />
 			<basic name="correcta" />
-			<basic name="acertada" />
+			<basic name="acertada" optional="true" />
 			
 			<many-to-one name="pregunta" fetch="LAZY" optional="false"
 				target-entity="com.dim.autotestAPI.entidades.PreguntaConID">
