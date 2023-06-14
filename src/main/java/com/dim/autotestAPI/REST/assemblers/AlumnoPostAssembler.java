@@ -22,8 +22,7 @@ public class AlumnoPostAssembler implements RepresentationModelAssembler<AlumnoC
 		// Para la relacion
 		model.add(
 				linkTo(methodOn(AlumnoController.class).one(((AlumnoConID) entity).getId())).withSelfRel(),
-		     	linkTo(methodOn(AlumnoController.class).examenes(entity.getId())).withRel("examenes"),
-		     	linkTo(methodOn(AlumnoController.class).preguntas(entity.getId())).withRel("preguntas")
+		     	linkTo(methodOn(AlumnoController.class).examenes(entity.getId())).withRel("examenes")
 				);
 		return model;
 	}

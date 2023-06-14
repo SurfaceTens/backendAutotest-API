@@ -5,8 +5,6 @@ import java.util.List;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
-import com.dim.autotestAPI.entidades.AlumnoConID;
-
 import es.mde.acing.utils.PreguntaExamen;
 import es.mde.acing.utils.PreguntaImpl.Adjunto;
 
@@ -21,12 +19,10 @@ public class PreguntaModel extends RepresentationModel<PreguntaModel> {
 	private String opcionIncorrecta1;
 	private String opcionIncorrecta2;
 	private String opcionIncorrecta3;
-	private String opcionIncorrecta4;
 	
 	// Relaciones
 	private List<PreguntaExamen> examenes;
 	private int numExamenes;
-	private AlumnoConID alumno;
 
 	// Clases Hijas
 	private String imagenURL;
@@ -97,28 +93,12 @@ public class PreguntaModel extends RepresentationModel<PreguntaModel> {
 		this.opcionIncorrecta3 = opcionIncorrecta3;
 	}
 
-	public String getOpcionIncorrecta4() {
-		return opcionIncorrecta4;
-	}
-
-	public void setOpcionIncorrecta4(String opcionIncorrecta4) {
-		this.opcionIncorrecta4 = opcionIncorrecta4;
-	}
-
 	public int getNumExamenes() {
 		return numExamenes;
 	}
 
 	public void setNumExamenes(int numExamenes) {
 		this.numExamenes = numExamenes;
-	}
-
-	public AlumnoConID getAlumno() {
-		return alumno;
-	}
-
-	public void setAlumno(AlumnoConID alumno) {
-		this.alumno = alumno;
 	}
 
 	public String getImagenURL() {
@@ -151,15 +131,6 @@ public class PreguntaModel extends RepresentationModel<PreguntaModel> {
 
 	public void setExamenes(List<PreguntaExamen> examenes) {
 		this.examenes = examenes;
-	}
-
-	@Override
-	public String toString() {
-		return "PreguntaModel [id=" + id + ", tematica=" + tematica + ", dificultad=" + dificultad + ", enunciado="
-				+ enunciado + ", opcionCorrecta=" + opcionCorrecta + ", opcionIncorrecta1=" + opcionIncorrecta1
-				+ ", opcionIncorrecta2=" + opcionIncorrecta2 + ", opcionIncorrecta3=" + opcionIncorrecta3
-				+ ", opcionIncorrecta4=" + opcionIncorrecta4 + ", numExamenes=" + numExamenes + ", alumno=" + alumno
-				+ ", imagenURL=" + imagenURL + ", videoURL=" + videoURL + "]";
 	}
 
 }

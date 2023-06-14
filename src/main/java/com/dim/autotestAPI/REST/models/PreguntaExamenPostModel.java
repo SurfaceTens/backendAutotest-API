@@ -7,9 +7,8 @@ import com.dim.autotestAPI.entidades.ExamenConID;
 import com.dim.autotestAPI.entidades.PreguntaConID;
 
 @Relation(itemRelation = "preguntaexamen")
-public class PreguntaExamenModel extends RepresentationModel<PreguntaExamenModel> {
+public class PreguntaExamenPostModel extends RepresentationModel<PreguntaExamenPostModel> {
 
-	private Long id;
 	private String respuesta;
 	private String correcta;
 	private boolean acertada;
@@ -17,14 +16,6 @@ public class PreguntaExamenModel extends RepresentationModel<PreguntaExamenModel
 	// Relaciones
 	private ExamenConID examen;
 	private PreguntaConID pregunta;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getRespuesta() {
 		return respuesta;

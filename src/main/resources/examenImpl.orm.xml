@@ -6,8 +6,6 @@
 
 	<mapped-superclass class="es.mde.acing.utils.ExamenImpl" access="FIELD">
 		<attributes>
-
-			<basic name="fecha" />
 			
 			<many-to-one name="alumno" fetch="LAZY" optional="false"
 				target-entity="com.dim.autotestAPI.entidades.AlumnoConID">

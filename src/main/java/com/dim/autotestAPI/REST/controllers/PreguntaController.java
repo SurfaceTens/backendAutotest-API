@@ -88,15 +88,13 @@ public class PreguntaController {
 		PreguntaConID editar = repositorio.findById(id).map(edt -> {
 			
 			// Para las clases hijas
-//			if (model.getAdjunto() == Adjunto.imagen) {
-//				PreguntaConImagen img = new PreguntaConImagen();
-//				repositorio.actualizarImagen(model.getImagenURL(), id);
-//				 edt = img;
-//			} else if (model.getAdjunto() == Adjunto.video) {
-//				PreguntaConVideo vid = new PreguntaConVideo();
-//				repositorio.actualizarVideo(model.getVideoURL(), id);
-//				 edt = vid;
-//			}
+			if (model.getAdjunto() == Adjunto.imagen) {
+				PreguntaConImagen img = new PreguntaConImagen();
+				repositorio.actualizarImagen(model.getImagenURL(), id);
+			} else if (model.getAdjunto() == Adjunto.video) {
+				PreguntaConVideo vid = new PreguntaConVideo();
+				repositorio.actualizarVideo(model.getVideoURL(), id);
+			}
 			
 			// Resto de atributos
 			edt.setTematica(model.getTematica());
@@ -106,11 +104,9 @@ public class PreguntaController {
 			edt.setOpcionInCorrecta1(model.getOpcionIncorrecta1());
 			edt.setOpcionInCorrecta2(model.getOpcionIncorrecta2());
 			edt.setOpcionInCorrecta3(model.getOpcionIncorrecta3());
-			edt.setOpcionInCorrecta4(model.getOpcionIncorrecta4());
 			
 			// Para las relaciones
-			edt.setAlumno(model.getAlumno());
-//			edt.setExamenes(model.getExamenes());
+			edt.setExamenes(model.getExamenes());
 			
 		return repositorio.save(edt);
 		})

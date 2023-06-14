@@ -106,7 +106,6 @@ public class ExamenController {
 	public ExamenModel edit(@PathVariable Long id, @RequestBody ExamenModel model) {
 		  
 		ExamenConID editar = repositorio.findById(id).map(edt -> {
-			edt.setFecha(model.getFecha());
 			
 			// Para las relaciones
 			edt.setAlumno(model.getAlumno());

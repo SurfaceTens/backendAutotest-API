@@ -5,8 +5,6 @@ import java.util.List;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
-import com.dim.autotestAPI.entidades.AlumnoConID;
-
 import es.mde.acing.utils.PreguntaExamen;
 import es.mde.acing.utils.PreguntaImpl.Adjunto;
 
@@ -20,10 +18,8 @@ public class PreguntaPostModel extends RepresentationModel<PreguntaPostModel> {
 	private String opcionIncorrecta1;
 	private String opcionIncorrecta2;
 	private String opcionIncorrecta3;
-	private String opcionIncorrecta4;
 
 	// Relaciones
-	private AlumnoConID alumno;
 	private List<PreguntaExamen> examenes;
 
 	// Clases Hijas
@@ -87,22 +83,6 @@ public class PreguntaPostModel extends RepresentationModel<PreguntaPostModel> {
 		this.opcionIncorrecta3 = opcionIncorrecta3;
 	}
 
-	public String getOpcionIncorrecta4() {
-		return opcionIncorrecta4;
-	}
-
-	public void setOpcionIncorrecta4(String opcionIncorrecta4) {
-		this.opcionIncorrecta4 = opcionIncorrecta4;
-	}
-
-	public AlumnoConID getAlumno() {
-		return alumno;
-	}
-
-	public void setAlumno(AlumnoConID alumno) {
-		this.alumno = alumno;
-	}
-
 	public String getImagenURL() {
 		return imagenURL;
 	}
@@ -133,15 +113,6 @@ public class PreguntaPostModel extends RepresentationModel<PreguntaPostModel> {
 
 	public void setExamenes(List<PreguntaExamen> examenes) {
 		this.examenes = examenes;
-	}
-
-	@Override
-	public String toString() {
-		return "PreguntaPostModel [tematica=" + tematica + ", dificultad=" + dificultad + ", enunciado=" + enunciado
-				+ ", opcionCorrecta=" + opcionCorrecta + ", opcionIncorrecta1=" + opcionIncorrecta1
-				+ ", opcionIncorrecta2=" + opcionIncorrecta2 + ", opcionIncorrecta3=" + opcionIncorrecta3
-				+ ", opcionIncorrecta4=" + opcionIncorrecta4 + ", alumno=" + alumno + ", imagenURL=" + imagenURL
-				+ ", videoURL=" + videoURL + ", adjunto=" + adjunto + "]";
 	}
 
 }

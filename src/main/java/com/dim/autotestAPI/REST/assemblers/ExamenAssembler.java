@@ -19,7 +19,6 @@ public class ExamenAssembler implements RepresentationModelAssembler<ExamenConID
 	public ExamenModel toModel(ExamenConID entity) {
 		ExamenModel model = new ExamenModel();
 		model.setId(entity.getId());
-		model.setFecha(entity.getFecha());
 		
 		// Para sacar conclusiones de la entidad
 		int numPreguntas = entity.getPreguntas() != null ? entity.getPreguntas().size() : 0;
@@ -37,10 +36,8 @@ public class ExamenAssembler implements RepresentationModelAssembler<ExamenConID
 	public ExamenConID toEntity(ExamenModel model) {
 		ExamenConID entity = new ExamenConID();
 		entity.setId(model.getId());
-		entity.setFecha(model.getFecha());
 		entity.setAlumno(model.getAlumno());
-		entity.setPreguntas(model.getPreguntas());
-		
+
 		// Para la releacion
 		// No necesitamos nada aqui.
 		return entity;

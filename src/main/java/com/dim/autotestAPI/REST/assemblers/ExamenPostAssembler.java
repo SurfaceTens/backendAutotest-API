@@ -18,7 +18,6 @@ public class ExamenPostAssembler implements RepresentationModelAssembler<ExamenC
 	@Override
 	public ExamenPostModel toModel(ExamenConID entity) {
 		ExamenPostModel model = new ExamenPostModel();
-		model.setFecha(entity.getFecha());
 		
 		// Para la relacion
 		model.add(
@@ -31,9 +30,7 @@ public class ExamenPostAssembler implements RepresentationModelAssembler<ExamenC
 	
 	public ExamenConID toEntity(ExamenPostModel model) {
 		ExamenConID entity = new ExamenConID();
-		entity.setFecha(model.getFecha());
 		entity.setAlumno(model.getAlumno());
-		entity.setPreguntas(model.getPreguntas());
 		
 		// Para la releacion
 		// No necesitamos nada aqui.

@@ -21,16 +21,13 @@ public class AlumnoAssembler implements RepresentationModelAssembler<AlumnoConID
 		model.setId(entity.getId());
 		
 		// Para sacar conclusiones de la entidad
-		int numPreguntas = entity.getPreguntas() != null ? entity.getPreguntas().size() : 0;
-		model.setNumPreguntas(numPreguntas);
 		int numExamenes = entity.getExamenes() != null ? entity.getExamenes().size() : 0;
 		model.setNumExamenes(numExamenes);
 
 		// Para la relacion
 		model.add(
 				linkTo(methodOn(AlumnoController.class).one(((AlumnoConID) entity).getId())).withSelfRel(),
-		     	linkTo(methodOn(AlumnoController.class).examenes(entity.getId())).withRel("examenes"),
-		     	linkTo(methodOn(AlumnoController.class).preguntas(entity.getId())).withRel("preguntas")
+		     	linkTo(methodOn(AlumnoController.class).examenes(entity.getId())).withRel("examenes")
 				);
 		return model;
 	}

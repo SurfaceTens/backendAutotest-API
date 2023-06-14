@@ -8,6 +8,7 @@
 		<attributes>
 
 			<basic name="respuesta" />
+			<basic name="correcta" />
 			<basic name="acertada" />
 			
 			<many-to-one name="pregunta" fetch="LAZY" optional="false"

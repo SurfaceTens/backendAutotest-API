@@ -30,7 +30,6 @@ public class PreguntaPostAssembler implements RepresentationModelAssembler<Pregu
 		model.setOpcionIncorrecta1(entity.getOpcionInCorrecta1());
 		model.setOpcionIncorrecta2(entity.getOpcionInCorrecta2());
 		model.setOpcionIncorrecta3(entity.getOpcionInCorrecta3());
-		model.setOpcionIncorrecta4(entity.getOpcionInCorrecta4());
 
 		// Para las clases hijas
 		if (entity.getAdjunto() == Adjunto.video) {
@@ -75,10 +74,8 @@ public class PreguntaPostAssembler implements RepresentationModelAssembler<Pregu
 		entity.setOpcionInCorrecta1(model.getOpcionIncorrecta1());
 		entity.setOpcionInCorrecta2(model.getOpcionIncorrecta2());
 		entity.setOpcionInCorrecta3(model.getOpcionIncorrecta3());
-		entity.setOpcionInCorrecta4(model.getOpcionIncorrecta4());
 
 		// Para la releacion
-		entity.setAlumno(model.getAlumno());
 		entity.setExamenes(model.getExamenes());
 		return entity;
 	}

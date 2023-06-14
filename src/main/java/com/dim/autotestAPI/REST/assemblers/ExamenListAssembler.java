@@ -15,7 +15,6 @@ import com.dim.autotestAPI.entidades.AlumnoConID;
 import com.dim.autotestAPI.entidades.ExamenConID;
 
 import es.mde.acing.utils.Alumno;
-
 import com.dim.autotestAPI.REST.controllers.ExamenController;
 
 @Component
@@ -25,10 +24,9 @@ public class ExamenListAssembler<T extends Alumno> implements RepresentationMode
 	public ExamenModel toModel(T entity) {
 		ExamenModel model = new ExamenModel();
 		model.setId(((ExamenConID) entity).getId());
-		model.setFecha(((ExamenConID) entity).getFecha());
 		
 		// Para sacar conclusiones de la entidad
-		int numPreguntas = entity.getPreguntas() != null ? entity.getPreguntas().size() : 0;
+		int numPreguntas = ((ExamenConID) entity).getPreguntas() != null ? ((ExamenConID) entity).getPreguntas().size() : 0;
 		model.setNumPreguntas(numPreguntas);
 
 		// Para la relacion

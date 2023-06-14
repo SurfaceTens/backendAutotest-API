@@ -33,7 +33,6 @@ public class PreguntaListAssembler<T extends Pregunta> implements Representation
 		model.setOpcionIncorrecta1(entity.getOpcionInCorrecta1());
 		model.setOpcionIncorrecta2(entity.getOpcionInCorrecta2());
 		model.setOpcionIncorrecta3(entity.getOpcionInCorrecta3());
-		model.setOpcionIncorrecta4(entity.getOpcionInCorrecta4());
 
 		// Para las clases hijas
 		if (entity.getAdjunto() == Adjunto.video) {

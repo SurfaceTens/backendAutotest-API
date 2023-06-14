@@ -10,7 +10,6 @@ public class AlumnoModel extends RepresentationModel<AlumnoModel> {
 	private String nombre;
 	private String apellidos;
 	private int numExamenes;
-	private int numPreguntas;
 
 	public Long getId() {
 		return id;
@@ -42,14 +41,6 @@ public class AlumnoModel extends RepresentationModel<AlumnoModel> {
 
 	public void setNumExamenes(int numExamenes) {
 		this.numExamenes = numExamenes;
-	}
-
-	public int getNumPreguntas() {
-		return numPreguntas;
-	}
-
-	public void setNumPreguntas(int numPreguntas) {
-		this.numPreguntas = numPreguntas;
 	}
 
 	@Override

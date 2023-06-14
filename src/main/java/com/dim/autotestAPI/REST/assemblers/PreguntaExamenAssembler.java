@@ -7,6 +7,7 @@ import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
 import com.dim.autotestAPI.REST.models.PreguntaExamenModel;
+import com.dim.autotestAPI.entidades.PreguntaConID;
 import com.dim.autotestAPI.entidades.PreguntaExamenConID;
 import com.dim.autotestAPI.REST.controllers.ExamenController;
 import com.dim.autotestAPI.REST.controllers.PreguntaExamenController;
@@ -20,10 +21,12 @@ public class PreguntaExamenAssembler implements RepresentationModelAssembler<Pre
 		model.setId(entity.getId());
 		model.setAcertada(entity.isAcertada());
 		model.setRespuesta(entity.getRespuesta());
+		model.setCorrecta(entity.getCorrecta());
+		model.setPregunta((PreguntaConID) entity.getPregunta());
 		
 		// Para la relacion
 		model.add(
-//				linkTo(methodOn(PreguntaExamenController.class).one(((PreguntaExamenConID) entity).getId())).withSelfRel(),
+//				linkTo(methodOn(PreguntaExamenController.class).one(((PreguntaExamenConID) entity).getId())).withSelfRel(), // Lo hacemos arriba con set get
 		     	linkTo(methodOn(ExamenController.class).one(entity.getId())).withRel("examenes") // No hace falta este endpoint por ahora
 				);
 		return model;
@@ -34,6 +37,7 @@ public class PreguntaExamenAssembler implements RepresentationModelAssembler<Pre
 		entity.setId(model.getId());
 		entity.setAcertada(model.isAcertada());
 		entity.setRespuesta(model.getRespuesta());
+		entity.setCorrecta(model.getCorrecta());
 
 		// Para la releacion
 		entity.setExamen(model.getExamen());
