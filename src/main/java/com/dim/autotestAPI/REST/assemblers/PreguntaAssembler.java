@@ -7,6 +7,7 @@ import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
 import com.dim.autotestAPI.REST.models.PreguntaModel;
+import com.dim.autotestAPI.REST.models.PreguntaPostModel;
 import com.dim.autotestAPI.entidades.PreguntaConID;
 import com.dim.autotestAPI.entidades.PreguntaConImagen;
 import com.dim.autotestAPI.entidades.PreguntaConVideo;
@@ -48,34 +49,30 @@ public class PreguntaAssembler implements RepresentationModelAssembler<PreguntaC
 		model.setNumExamenes(numExamenes);
 
 		// Para la relacion
-		model.add(
-				linkTo(methodOn(PreguntaController.class).one(((PreguntaConID) entity).getId())).withSelfRel(),
-		     	linkTo(methodOn(ExamenController.class).one(entity.getId())).withRel("examenes")
-				);
+		model.add(linkTo(methodOn(PreguntaController.class).one(((PreguntaConID) entity).getId())).withSelfRel(),
+				linkTo(methodOn(ExamenController.class).one(entity.getId())).withRel("examenes"));
 		return model;
 	}
 
-	public PreguntaConID toEntity(PreguntaModel model) {
+	public PreguntaConID toEntity(PreguntaPostModel model) {
 		PreguntaConID entity = new PreguntaConID();
-		
-		// Para las clases hijas		
+
+		// Para las clases hijas
 		switch (model.getAdjunto()) {
-			case imagen: {
-				PreguntaConImagen imagen = new PreguntaConImagen();
-				imagen.setImagenURL(model.getImagenURL());
-				entity = imagen;
-				break;
-			}
-			case video: {
-				PreguntaConVideo video = new PreguntaConVideo();
-				video.setVideoURL(model.getVideoURL());
-				entity = video;
-				break;
-			}
+		case imagen: {
+			PreguntaConImagen imagen = new PreguntaConImagen();
+			imagen.setImagenURL(model.getImagenURL());
+			entity = imagen;
+			break;
+		}
+		case video: {
+			PreguntaConVideo video = new PreguntaConVideo();
+			video.setVideoURL(model.getVideoURL());
+			entity = video;
+			break;
+		}
 		}
 
-		
-		entity.setId(model.getId());
 		entity.setTematica(model.getTematica());
 		entity.setDificultad(model.getDificultad());
 		entity.setEnunciado(model.getEnunciado());

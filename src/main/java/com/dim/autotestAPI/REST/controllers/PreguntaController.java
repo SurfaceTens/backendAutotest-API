@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.dim.autotestAPI.REST.assemblers.PreguntaAssembler;
 import com.dim.autotestAPI.REST.assemblers.PreguntaListAssembler;
-import com.dim.autotestAPI.REST.assemblers.PreguntaPostAssembler;
 import com.dim.autotestAPI.REST.excepciones.RegisterNotFoundException;
 import com.dim.autotestAPI.REST.models.PreguntaModel;
 import com.dim.autotestAPI.REST.models.PreguntaPostModel;
@@ -35,77 +34,71 @@ import es.mde.acing.utils.PreguntaImpl.Adjunto;
 @RestController
 @RequestMapping("/preguntas")
 public class PreguntaController {
-	
+
 	private final PreguntaRepositorio repositorio;
-	private final PreguntaAssembler assembler;
-	private final PreguntaPostAssembler postAssembler;
-	private final PreguntaListAssembler listaAssembler;
-	
-	PreguntaController(PreguntaRepositorio repositorio, PreguntaAssembler assembler, PreguntaPostAssembler postAssembler, AlumnoRepositorio alRepositorio,
-			PreguntaListAssembler listaAssembler) {
+	private final PreguntaAssembler preguntaAssembler;
+	private final PreguntaListAssembler preguntaListAssembler;
+
+	PreguntaController(PreguntaRepositorio repositorio, PreguntaAssembler preguntaAssembler,
+			AlumnoRepositorio alRepositorio, PreguntaListAssembler preguntaListAssembler) {
 		this.repositorio = repositorio;
-		this.assembler = assembler;
-		this.postAssembler = postAssembler;
-		this.listaAssembler = listaAssembler;
+		this.preguntaAssembler = preguntaAssembler;
+		this.preguntaListAssembler = preguntaListAssembler;
 	}
-	
+
 	@GetMapping("{id}")
 	public PreguntaModel one(@PathVariable Long id) {
 		PreguntaConID uno = (PreguntaConID) repositorio.findById(id)
 				.orElseThrow(() -> new RegisterNotFoundException(id, "Pregunta"));
-		return assembler.toModel(uno);
+		return preguntaAssembler.toModel(uno);
 	}
-	
+
 	public CollectionModel<PreguntaModel> getAleatorias(int numPreguntas) {
-	    List<PreguntaConID> preguntas = repositorio.findAll();
-	    int totalPreguntas = preguntas.size();
-	    
-	    if (numPreguntas >= totalPreguntas) {
-	        List<PreguntaModel> preguntasModel = preguntas.stream()
-	                .map(pregunta -> listaAssembler.toModel(pregunta))
-	                .collect(Collectors.toList());
-	        
-	        return listaAssembler.toCollection(preguntasModel);
-	    } else {
-	        List<PreguntaConID> preguntasAleatorias = new ArrayList<>();
-	        Random random = new Random();
-	        
-	        while (preguntasAleatorias.size() < numPreguntas) {
-	            int index = random.nextInt(totalPreguntas);
-	            PreguntaConID pregunta = preguntas.get(index);
-	            
-	            if (!preguntasAleatorias.contains(pregunta)) {
-	                preguntasAleatorias.add(pregunta);
-	            }
-	        }
-	        
-	        List<PreguntaModel> preguntaModels = preguntasAleatorias.stream()
-	                .map(pregunta -> listaAssembler.toModel(pregunta))
-	                .collect(Collectors.toList());
-	        
-	        return listaAssembler.toCollection(preguntaModels);
-	    }
+		List<PreguntaConID> preguntas = repositorio.findAll();
+		int totalPreguntas = preguntas.size();
+
+		if (numPreguntas >= totalPreguntas) {
+			List<PreguntaModel> preguntasModel = preguntas.stream()
+					.map(pregunta -> preguntaListAssembler.toModel(pregunta)).collect(Collectors.toList());
+
+			return preguntaListAssembler.toCollection(preguntasModel);
+		} else {
+			List<PreguntaConID> preguntasAleatorias = new ArrayList<>();
+			Random random = new Random();
+
+			while (preguntasAleatorias.size() < numPreguntas) {
+				int index = random.nextInt(totalPreguntas);
+				PreguntaConID pregunta = preguntas.get(index);
+
+				if (!preguntasAleatorias.contains(pregunta)) {
+					preguntasAleatorias.add(pregunta);
+				}
+			}
+
+			List<PreguntaModel> preguntaModels = preguntasAleatorias.stream()
+					.map(pregunta -> preguntaListAssembler.toModel(pregunta)).collect(Collectors.toList());
+
+			return preguntaListAssembler.toCollection(preguntaModels);
+		}
 	}
 
-
-	
 	@GetMapping
 	public CollectionModel<PreguntaModel> all() {
-		return listaAssembler.toCollection(repositorio.findAll());
+		return preguntaListAssembler.toCollection(repositorio.findAll());
 	}
-	
+
 	@PostMapping
 	public PreguntaModel add(@RequestBody PreguntaPostModel model) {
-		PreguntaConID post = repositorio.save(postAssembler.toEntity(model));
+		PreguntaConID post = repositorio.save(preguntaAssembler.toEntity(model));
 		// Los log
 //		log.info("Añadido " + post);
-		return assembler.toModel(post);
+		return preguntaAssembler.toModel(post);
 	}
-	
+
 	@PutMapping("{id}")
 	public PreguntaModel edit(@PathVariable Long id, @RequestBody PreguntaPostModel model) {
 		PreguntaConID editar = repositorio.findById(id).map(edt -> {
-			
+
 			// Para las clases hijas
 			if (model.getAdjunto() == Adjunto.imagen) {
 				new PreguntaConImagen();
@@ -114,7 +107,7 @@ public class PreguntaController {
 				new PreguntaConVideo();
 				repositorio.actualizarVideo(model.getVideoURL(), id);
 			}
-			
+
 			// Resto de atributos
 			edt.setTematica(model.getTematica());
 			edt.setDificultad(model.getDificultad());
@@ -123,25 +116,23 @@ public class PreguntaController {
 			edt.setOpcionInCorrecta1(model.getOpcionIncorrecta1());
 			edt.setOpcionInCorrecta2(model.getOpcionIncorrecta2());
 			edt.setOpcionInCorrecta3(model.getOpcionIncorrecta3());
-			
+
 			// Para las relaciones
 			edt.setExamenes(model.getExamenes());
-			
-		return repositorio.save(edt);
-		})
-		.orElseThrow(() -> new RegisterNotFoundException(id, "Examen"));
+
+			return repositorio.save(edt);
+		}).orElseThrow(() -> new RegisterNotFoundException(id, "Examen"));
 		// Los log
 //		log.info("Actualizado " + editar);
-		return assembler.toModel(editar);
-}
-	
+		return preguntaAssembler.toModel(editar);
+	}
+
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable Long id) {
 		repositorio.findById(id).map(del -> {
-				repositorio.deleteById(id);	
-				return del;
-			})
-			.orElseThrow(() -> new RegisterNotFoundException(id, "Pregunta"));
+			repositorio.deleteById(id);
+			return del;
+		}).orElseThrow(() -> new RegisterNotFoundException(id, "Pregunta"));
 	}
-	
+
 }
