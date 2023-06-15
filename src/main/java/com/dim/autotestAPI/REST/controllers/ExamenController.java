@@ -21,13 +21,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.dim.autotestAPI.REST.assemblers.ExamenAssembler;
 import com.dim.autotestAPI.REST.assemblers.ExamenListAssembler;
-import com.dim.autotestAPI.REST.assemblers.ExamenPostAssembler;
 import com.dim.autotestAPI.REST.assemblers.PreguntaAssembler;
 import com.dim.autotestAPI.REST.assemblers.PreguntaExamenAssembler;
 import com.dim.autotestAPI.REST.assemblers.PreguntaListAssembler;
 import com.dim.autotestAPI.REST.assemblers.AlumnoAssembler;
-import com.dim.autotestAPI.REST.assemblers.AlumnoListAssembler;
-import com.dim.autotestAPI.REST.assemblers.AlumnoPostAssembler;
 import com.dim.autotestAPI.REST.excepciones.RegisterNotFoundException;
 import com.dim.autotestAPI.REST.models.AlumnoModel;
 import com.dim.autotestAPI.REST.models.ExamenModel;
@@ -51,21 +48,19 @@ public class ExamenController {
 	private final ExamenRepositorio repositorio;
 	private final AlumnoRepositorio alRepositorio;
 	private final PreguntaExamenRepositorio relacionRepositorio;
-	private final ExamenAssembler assembler;
-	private final ExamenPostAssembler postAssembler;
+	private final ExamenAssembler examenAssembler;
 	private final ExamenListAssembler listaAssembler;
 	private final AlumnoAssembler alAssembler;
 	private final PreguntaAssembler preguntaAssembler;
 	private final PreguntaListAssembler preguntaListAssembler;
 	private final PreguntaExamenAssembler preguntaExamenAssembler;
 
-	ExamenController(ExamenRepositorio repositorio, ExamenAssembler assembler, ExamenPostAssembler postAssembler, AlumnoRepositorio alRepositorio,
+	ExamenController(ExamenRepositorio repositorio, ExamenAssembler examenAssembler, AlumnoRepositorio alRepositorio,
 			PreguntaExamenRepositorio relacionRepositorio, ExamenListAssembler listaAssembler, AlumnoAssembler alAssembler, PreguntaAssembler preguntaAssembler, PreguntaListAssembler preguntaListAssembler, PreguntaExamenAssembler preguntaExamenAssembler) {
 		this.repositorio = repositorio;
 		this.alRepositorio = alRepositorio;
 		this.relacionRepositorio = relacionRepositorio;
-		this.assembler = assembler;
-		this.postAssembler = postAssembler;
+		this.examenAssembler = examenAssembler;
 		this.alAssembler = alAssembler;
 		this.listaAssembler = listaAssembler;
 		this.preguntaAssembler = preguntaAssembler;
@@ -77,7 +72,7 @@ public class ExamenController {
 	public ExamenModel one(@PathVariable Long id) {
 		ExamenConID uno = (ExamenConID) repositorio.findById(id)
 				.orElseThrow(() -> new RegisterNotFoundException(id, "Examen"));
-		return assembler.toModel(uno);
+		return examenAssembler.toModel(uno);
 	}
 	
 	@GetMapping
@@ -87,7 +82,7 @@ public class ExamenController {
 	
 	@PostMapping 
 	public ExamenModel add(@RequestBody ExamenPostModel model) {
-		ExamenConID post = repositorio.save(postAssembler.toEntity(model));
+		ExamenConID post = repositorio.save(examenAssembler.toEntity(model));
 		
 		// Guardar las relaciones con las preguntas
 //	    if (model.getPreguntas() != null && !model.getPreguntas().isEmpty()) {
@@ -103,7 +98,7 @@ public class ExamenController {
 	    
 		// Los log
 //		log.info("Añadido " + post);
-		return assembler.toModel(post);
+		return examenAssembler.toModel(post);
 	}
 	
 	@PutMapping("{id}")
@@ -120,7 +115,7 @@ public class ExamenController {
 		.orElseThrow(() -> new RegisterNotFoundException(id, "Examen"));
 		// Los log
 //		log.info("Actualizado " + editar);
-		return assembler.toModel(editar);
+		return examenAssembler.toModel(editar);
 }
 
 	@DeleteMapping("{id}")

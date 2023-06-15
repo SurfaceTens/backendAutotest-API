@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import com.dim.autotestAPI.REST.assemblers.PreguntaAssembler;
 import com.dim.autotestAPI.REST.assemblers.PreguntaListAssembler;
 import com.dim.autotestAPI.REST.assemblers.PreguntaPostAssembler;
-import com.dim.autotestAPI.REST.assemblers.AlumnoListAssembler;
 import com.dim.autotestAPI.REST.excepciones.RegisterNotFoundException;
 import com.dim.autotestAPI.REST.models.PreguntaModel;
 import com.dim.autotestAPI.REST.models.PreguntaPostModel;
@@ -43,7 +42,7 @@ public class PreguntaController {
 	private final PreguntaListAssembler listaAssembler;
 	
 	PreguntaController(PreguntaRepositorio repositorio, PreguntaAssembler assembler, PreguntaPostAssembler postAssembler, AlumnoRepositorio alRepositorio,
-			PreguntaListAssembler listaAssembler, AlumnoListAssembler alListaAssembler) {
+			PreguntaListAssembler listaAssembler) {
 		this.repositorio = repositorio;
 		this.assembler = assembler;
 		this.postAssembler = postAssembler;
