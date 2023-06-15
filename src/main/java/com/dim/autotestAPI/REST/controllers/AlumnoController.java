@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.dim.autotestAPI.REST.assemblers.AlumnoAssembler;
-import com.dim.autotestAPI.REST.assemblers.AlumnoListAssembler;
-import com.dim.autotestAPI.REST.assemblers.AlumnoPostAssembler;
 import com.dim.autotestAPI.REST.assemblers.ExamenListAssembler;
 import com.dim.autotestAPI.REST.assemblers.PreguntaListAssembler;
 import com.dim.autotestAPI.REST.excepciones.RegisterNotFoundException;
@@ -38,20 +36,16 @@ public class AlumnoController {
 
 	private final AlumnoRepositorio repositorio;
 	private final ExamenRepositorio exRepositorio;
-	private final AlumnoAssembler assembler;
-	private final AlumnoPostAssembler postAssembler;
-	private final AlumnoListAssembler listaAssembler;
+	private final AlumnoAssembler alumnoAssembler;
 	private final ExamenListAssembler exListaAssembler;
 	private final PreguntaListAssembler pregListaAssembler;
 
-	AlumnoController(AlumnoRepositorio repositorio, AlumnoAssembler assembler, AlumnoPostAssembler postAssembler, ExamenRepositorio exRepositorio,
-			ExamenListAssembler exListaAssembler, AlumnoListAssembler listaAssembler, PreguntaListAssembler pregListaAssembler) {
+	AlumnoController(AlumnoRepositorio repositorio, AlumnoAssembler alumnoAssembler, ExamenRepositorio exRepositorio,
+			ExamenListAssembler exListaAssembler, PreguntaListAssembler pregListaAssembler) {
 		this.repositorio = repositorio;
 		this.exRepositorio = exRepositorio;
-		this.assembler = assembler;
-		this.postAssembler = postAssembler;
+		this.alumnoAssembler = alumnoAssembler;
 		this.exListaAssembler = exListaAssembler;
-		this.listaAssembler = listaAssembler;
 		this.pregListaAssembler = pregListaAssembler;
 	}
 
@@ -59,12 +53,12 @@ public class AlumnoController {
 	public AlumnoModel one(@PathVariable Long id) {
 		AlumnoConID uno = (AlumnoConID) repositorio.findById(id)
 				.orElseThrow(() -> new RegisterNotFoundException(id, "Alumno"));
-		return assembler.toModel(uno);
+		return alumnoAssembler.toModel(uno);
 	}
 	
 	@GetMapping
 	public CollectionModel<AlumnoModel> all() {
-		return listaAssembler.toCollection(repositorio.findAll());
+		return alumnoAssembler.toCollection(repositorio.findAll());
 	}
 	
 	@SuppressWarnings("unchecked") // No se podia quitar el warning de otro modo.
@@ -85,10 +79,10 @@ public class AlumnoController {
 	
 	@PostMapping
 	public AlumnoModel add(@RequestBody AlumnoPostModel model) {
-		AlumnoConID post = repositorio.save(postAssembler.toEntity(model));
+		AlumnoConID post = repositorio.save(alumnoAssembler.toEntity(model));
 		// Los log
 //		log.info("Añadido " + post);
-		return assembler.toModel(post);
+		return alumnoAssembler.toModel(post);
 	}
 	
 	@PutMapping("{id}")
@@ -107,7 +101,7 @@ public class AlumnoController {
 		.orElseThrow(() -> new RegisterNotFoundException(id, "Alumno"));
 		// Los log
 //		log.info("Actualizado " + editar);
-		return assembler.toModel(editar);
+		return alumnoAssembler.toModel(editar);
 }
 	
 	@DeleteMapping("{id}")
