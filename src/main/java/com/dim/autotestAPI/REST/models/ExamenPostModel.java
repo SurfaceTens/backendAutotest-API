@@ -8,7 +8,6 @@ import com.dim.autotestAPI.entidades.AlumnoConID;
 @Relation(itemRelation = "examen")
 public class ExamenPostModel extends RepresentationModel<ExamenPostModel> {
 
-	// Relaciones
 	private AlumnoConID alumno;
 
 	public AlumnoConID getAlumno() {

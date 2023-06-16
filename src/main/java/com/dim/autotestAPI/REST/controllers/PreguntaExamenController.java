@@ -1,8 +1,5 @@
 package com.dim.autotestAPI.REST.controllers;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,11 +16,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import com.dim.autotestAPI.REST.assemblers.ExamenAssembler;
 import com.dim.autotestAPI.REST.assemblers.PreguntaExamenAssembler;
 import com.dim.autotestAPI.REST.excepciones.RegisterNotFoundException;
-import com.dim.autotestAPI.REST.models.ExamenModel;
-import com.dim.autotestAPI.REST.models.ExamenPostModel;
 import com.dim.autotestAPI.REST.models.PreguntaExamenModel;
 import com.dim.autotestAPI.REST.models.PreguntaExamenPostModel;
-import com.dim.autotestAPI.REST.models.PreguntaModel;
 import com.dim.autotestAPI.entidades.AlumnoConID;
 import com.dim.autotestAPI.entidades.ExamenConID;
 import com.dim.autotestAPI.entidades.PreguntaConID;
@@ -32,8 +26,6 @@ import com.dim.autotestAPI.repositorios.AlumnoRepositorio;
 import com.dim.autotestAPI.repositorios.ExamenRepositorio;
 import com.dim.autotestAPI.repositorios.PreguntaExamenRepositorio;
 import com.dim.autotestAPI.repositorios.PreguntaRepositorio;
-
-import es.mde.acing.utils.PreguntaExamen;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -45,7 +37,6 @@ public class PreguntaExamenController {
 	private final AlumnoRepositorio alumnoRepositorio;
 	private final PreguntaRepositorio preguntaRepositorio;
 	private final PreguntaExamenAssembler assembler;
-	private final ExamenAssembler examenAssembler;
 
 	PreguntaExamenController(PreguntaExamenRepositorio relacionRepositorio, PreguntaExamenAssembler assembler,
 			ExamenAssembler examenAssembler, ExamenRepositorio examenRepositorio, AlumnoRepositorio alumnoRepositorio,
@@ -55,7 +46,6 @@ public class PreguntaExamenController {
 		this.alumnoRepositorio = alumnoRepositorio;
 		this.preguntaRepositorio = preguntaRepositorio;
 		this.assembler = assembler;
-		this.examenAssembler = examenAssembler;
 	}
 
 	@GetMapping("{id}")
@@ -74,8 +64,6 @@ public class PreguntaExamenController {
 	public PreguntaExamenModel add(@RequestBody PreguntaExamenPostModel model) {
 		PreguntaExamenConID post = relacionRepositorio.save(assembler.toEntity(model));
 
-		// Los log
-//		log.info("Añadido " + post);
 		return assembler.toModel(post);
 	}
 
@@ -84,20 +72,16 @@ public class PreguntaExamenController {
 			@PathVariable Long idAlumno) {
 		List<PreguntaExamenConID> preguntasExamen = new ArrayList<>();
 
-		// Conseguir preguntas
 		List<PreguntaConID> preguntas = preguntaRepositorio.traerNPreguntas(numPreguntas);
 		Collections.shuffle(preguntas);
 
-		// Buscar alumno
 		AlumnoConID alumno = (AlumnoConID) alumnoRepositorio.findById(idAlumno)
 				.orElseThrow(() -> new RegisterNotFoundException(idAlumno, "Alumno"));
 
-		// Crear examen
 		ExamenConID examen = new ExamenConID();
 		examen.setAlumno(alumno);
 		examenRepositorio.save(examen);
 
-		// Añadir preguntas
 		for (PreguntaConID pregunta : preguntas) {
 			PreguntaExamenConID relacion = new PreguntaExamenConID();
 			relacion.setPregunta(pregunta);

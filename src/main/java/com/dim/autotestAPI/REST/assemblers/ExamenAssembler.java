@@ -12,7 +12,6 @@ import com.dim.autotestAPI.entidades.AlumnoConID;
 import com.dim.autotestAPI.entidades.ExamenConID;
 import com.dim.autotestAPI.REST.controllers.AlumnoController;
 import com.dim.autotestAPI.REST.controllers.ExamenController;
-import com.dim.autotestAPI.REST.controllers.PreguntaController;
 
 @Component
 public class ExamenAssembler implements RepresentationModelAssembler<ExamenConID, ExamenModel> {
@@ -22,11 +21,9 @@ public class ExamenAssembler implements RepresentationModelAssembler<ExamenConID
 		ExamenModel model = new ExamenModel();
 		model.setId(entity.getId());
 
-		// Para sacar conclusiones de la entidad
 		int numPreguntas = entity.getPreguntas() != null ? entity.getPreguntas().size() : 0;
 		model.setNumPreguntas(numPreguntas);
 
-		// Para la relacion
 		model.add(linkTo(methodOn(ExamenController.class).one(((ExamenConID) entity).getId())).withSelfRel(),
 				linkTo(methodOn(AlumnoController.class).one(((AlumnoConID) entity.getAlumno()).getId()))
 						.withRel("alumno"),
@@ -38,8 +35,6 @@ public class ExamenAssembler implements RepresentationModelAssembler<ExamenConID
 		ExamenConID entity = new ExamenConID();
 		entity.setAlumno(model.getAlumno());
 
-		// Para la releacion
-		// No necesitamos nada aqui.
 		return entity;
 	}
 

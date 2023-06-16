@@ -18,36 +18,30 @@ import es.mde.acing.utils.Examen;
 
 import com.dim.autotestAPI.REST.controllers.AlumnoController;
 import com.dim.autotestAPI.REST.controllers.ExamenController;
-import com.dim.autotestAPI.REST.controllers.PreguntaController;
 
 @Component
 public class ExamenListAssembler<T extends Examen> implements RepresentationModelAssembler<T, ExamenModel> {
-	
+
 	@Override
 	public ExamenModel toModel(T entity) {
 		ExamenModel model = new ExamenModel();
 		model.setId(((ExamenConID) entity).getId());
-		
-		// Para sacar conclusiones de la entidad
-		int numPreguntas = ((ExamenConID) entity).getPreguntas() != null ? ((ExamenConID) entity).getPreguntas().size() : 0;
+
+		int numPreguntas = ((ExamenConID) entity).getPreguntas() != null ? ((ExamenConID) entity).getPreguntas().size()
+				: 0;
 		model.setNumPreguntas(numPreguntas);
 
-		// Para la relacion
-		model.add(
-				linkTo(methodOn(ExamenController.class).one(((ExamenConID) entity).getId())).withSelfRel(),
-				linkTo(methodOn(AlumnoController.class).one(((AlumnoConID) entity.getAlumno()).getId())).withRel("alumno"),
-				linkTo(methodOn(ExamenController.class).preguntasExamen(((ExamenConID) entity).getId())).withRel("preguntas")
-				);
+		model.add(linkTo(methodOn(ExamenController.class).one(((ExamenConID) entity).getId())).withSelfRel(),
+				linkTo(methodOn(AlumnoController.class).one(((AlumnoConID) entity.getAlumno()).getId()))
+						.withRel("alumno"),
+				linkTo(methodOn(ExamenController.class).preguntasExamen(((ExamenConID) entity).getId()))
+						.withRel("preguntas"));
 		return model;
 	}
-	
-	
-	
-	
+
 	public CollectionModel<ExamenModel> toCollection(List<T> lista) {
-		CollectionModel<ExamenModel> collection = CollectionModel.of(
-				lista.stream().map(this::toModel).collect(Collectors.toList())
-				);	
+		CollectionModel<ExamenModel> collection = CollectionModel
+				.of(lista.stream().map(this::toModel).collect(Collectors.toList()));
 		return collection;
 	}
 

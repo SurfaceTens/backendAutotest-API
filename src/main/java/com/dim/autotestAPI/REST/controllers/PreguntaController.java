@@ -90,8 +90,6 @@ public class PreguntaController {
 	@PostMapping
 	public PreguntaModel add(@RequestBody PreguntaPostModel model) {
 		PreguntaConID post = repositorio.save(preguntaAssembler.toEntity(model));
-		// Los log
-//		log.info("Añadido " + post);
 		return preguntaAssembler.toModel(post);
 	}
 
@@ -99,7 +97,6 @@ public class PreguntaController {
 	public PreguntaModel edit(@PathVariable Long id, @RequestBody PreguntaPostModel model) {
 		PreguntaConID editar = repositorio.findById(id).map(edt -> {
 
-			// Para las clases hijas
 			if (model.getAdjunto() == Adjunto.imagen) {
 				new PreguntaConImagen();
 				repositorio.actualizarImagen(model.getImagenURL(), id);
@@ -108,7 +105,6 @@ public class PreguntaController {
 				repositorio.actualizarVideo(model.getVideoURL(), id);
 			}
 
-			// Resto de atributos
 			edt.setTematica(model.getTematica());
 			edt.setDificultad(model.getDificultad());
 			edt.setEnunciado(model.getEnunciado());
@@ -117,13 +113,10 @@ public class PreguntaController {
 			edt.setOpcionInCorrecta2(model.getOpcionIncorrecta2());
 			edt.setOpcionInCorrecta3(model.getOpcionIncorrecta3());
 
-			// Para las relaciones
 			edt.setExamenes(model.getExamenes());
 
 			return repositorio.save(edt);
 		}).orElseThrow(() -> new RegisterNotFoundException(id, "Examen"));
-		// Los log
-//		log.info("Actualizado " + editar);
 		return preguntaAssembler.toModel(editar);
 	}
 

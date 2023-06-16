@@ -25,11 +25,9 @@ public class AlumnoAssembler implements RepresentationModelAssembler<AlumnoConID
 		model.setApellidos(entity.getApellidos());
 		model.setId(entity.getId());
 
-		// Para sacar conclusiones de la entidad
 		int numExamenes = entity.getExamenes() != null ? entity.getExamenes().size() : 0;
 		model.setNumExamenes(numExamenes);
 
-		// Para la relacion
 		model.add(linkTo(methodOn(AlumnoController.class).one(((AlumnoConID) entity).getId())).withSelfRel(),
 				linkTo(methodOn(AlumnoController.class).examenes(entity.getId())).withRel("examenes"));
 		return model;
@@ -40,8 +38,6 @@ public class AlumnoAssembler implements RepresentationModelAssembler<AlumnoConID
 		entity.setNombre(model.getNombre());
 		entity.setApellidos(model.getApellidos());
 
-		// Para la releacion
-		// No necesitamos nada aqui.
 		return entity;
 	}
 

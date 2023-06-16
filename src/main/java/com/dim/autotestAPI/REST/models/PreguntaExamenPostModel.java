@@ -13,7 +13,6 @@ public class PreguntaExamenPostModel extends RepresentationModel<PreguntaExamenP
 	private String correcta;
 	private boolean acertada;
 
-	// Relaciones
 	private ExamenConID examen;
 	private PreguntaConID pregunta;
 

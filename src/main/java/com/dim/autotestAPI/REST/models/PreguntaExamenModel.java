@@ -12,7 +12,6 @@ public class PreguntaExamenModel extends RepresentationModel<PreguntaExamenModel
 	private String[] incorrectas;
 	private boolean acertada;
 
-	// Relaciones
 	private String enunciado;
 
 	public Long getId() {

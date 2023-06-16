@@ -10,7 +10,6 @@ public class ExamenModel extends RepresentationModel<ExamenModel> {
 
 	private Long id;
 
-	// Relaciones
 	private AlumnoConID alumno;
 	private int numPreguntas;
 

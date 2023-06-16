@@ -20,11 +20,9 @@ public class PreguntaModel extends RepresentationModel<PreguntaModel> {
 	private String opcionIncorrecta2;
 	private String opcionIncorrecta3;
 	
-	// Relaciones
 	private List<PreguntaExamen> examenes;
 	private int numExamenes;
 
-	// Clases Hijas
 	private String imagenURL;
 	private String videoURL;
 	private Adjunto adjunto;

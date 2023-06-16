@@ -13,14 +13,11 @@ import org.springframework.stereotype.Component;
 import com.dim.autotestAPI.REST.models.PreguntaExamenModel;
 import com.dim.autotestAPI.REST.models.PreguntaExamenPostModel;
 import com.dim.autotestAPI.entidades.ExamenConID;
-import com.dim.autotestAPI.entidades.PreguntaConID;
 import com.dim.autotestAPI.entidades.PreguntaExamenConID;
 
 import es.mde.acing.utils.PreguntaExamen;
 
 import com.dim.autotestAPI.REST.controllers.ExamenController;
-import com.dim.autotestAPI.REST.controllers.PreguntaController;
-import com.dim.autotestAPI.REST.controllers.PreguntaExamenController;
 
 @Component
 public class PreguntaExamenAssembler<T extends PreguntaExamen>
@@ -38,10 +35,8 @@ public class PreguntaExamenAssembler<T extends PreguntaExamen>
 				entity.getPregunta().getOpcionInCorrecta2(), entity.getPregunta().getOpcionInCorrecta3() };
 		model.setIncorrectas(incorrectas);
 
-		// Para la relacion
 		model.add(
 				linkTo(methodOn(ExamenController.class).one(((ExamenConID) entity.getExamen()).getId())).withRel("examen")
-//				linkTo(methodOn(PreguntaController.class).one(((PreguntaConID) entity.getPregunta()).getId())).withRel("pregunta")
 				);
 		return model;
 	}
@@ -52,7 +47,6 @@ public class PreguntaExamenAssembler<T extends PreguntaExamen>
 		entity.setRespuesta(model.getRespuesta());
 		entity.setCorrecta(model.getCorrecta());
 
-		// Para la releacion
 		entity.setExamen(model.getExamen());
 		entity.setPregunta(model.getPregunta());
 		return entity;

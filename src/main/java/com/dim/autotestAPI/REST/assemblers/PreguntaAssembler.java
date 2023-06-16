@@ -33,7 +33,6 @@ public class PreguntaAssembler implements RepresentationModelAssembler<PreguntaC
 		model.setOpcionIncorrecta2(entity.getOpcionInCorrecta2());
 		model.setOpcionIncorrecta3(entity.getOpcionInCorrecta3());
 
-		// Para las clases hijas
 		if (entity.getAdjunto() == Adjunto.video) {
 			model.setVideoURL(((ConVideo) entity).getVideoURL());
 			model.setImagenURL(null);
@@ -44,11 +43,9 @@ public class PreguntaAssembler implements RepresentationModelAssembler<PreguntaC
 			model.setAdjunto(Adjunto.imagen);
 		}
 
-		// Para sacar conclusiones de la entidad
 		int numExamenes = entity.getExamenes() != null ? entity.getExamenes().size() : 0;
 		model.setNumExamenes(numExamenes);
 
-		// Para la relacion
 		model.add(linkTo(methodOn(PreguntaController.class).one(((PreguntaConID) entity).getId())).withSelfRel(),
 				linkTo(methodOn(ExamenController.class).one(entity.getId())).withRel("examenes"));
 		return model;
@@ -57,7 +54,6 @@ public class PreguntaAssembler implements RepresentationModelAssembler<PreguntaC
 	public PreguntaConID toEntity(PreguntaPostModel model) {
 		PreguntaConID entity = new PreguntaConID();
 
-		// Para las clases hijas
 		switch (model.getAdjunto()) {
 		case imagen: {
 			PreguntaConImagen imagen = new PreguntaConImagen();
@@ -81,7 +77,6 @@ public class PreguntaAssembler implements RepresentationModelAssembler<PreguntaC
 		entity.setOpcionInCorrecta2(model.getOpcionIncorrecta2());
 		entity.setOpcionInCorrecta3(model.getOpcionIncorrecta3());
 
-		// Para la releacion
 		entity.setExamenes(model.getExamenes());
 		return entity;
 	}

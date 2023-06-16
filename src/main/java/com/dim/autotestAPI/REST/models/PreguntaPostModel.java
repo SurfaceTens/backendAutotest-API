@@ -19,10 +19,8 @@ public class PreguntaPostModel extends RepresentationModel<PreguntaPostModel> {
 	private String opcionIncorrecta2;
 	private String opcionIncorrecta3;
 
-	// Relaciones
 	private List<PreguntaExamen> examenes;
 
-	// Clases Hijas
 	private String imagenURL;
 	private String videoURL;
 	private Adjunto adjunto;
