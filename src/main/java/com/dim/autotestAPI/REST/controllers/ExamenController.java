@@ -88,11 +88,9 @@ public class ExamenController {
 
 	@GetMapping("{id}/preguntas")
 	public CollectionModel<PreguntaExamenModel> preguntasExamen(@PathVariable Long id) {
-		System.out.println("sacando coleccion del examan" + id);
 		ExamenConID examen = examenRepositorio.findById(id)
 				.orElseThrow(() -> new RegisterNotFoundException(id, "Examen"));
-		System.out.println("el alumno es" + examen.getAlumno());
-		System.out.println("el examen tiene" + examen.getPreguntas().size());
+		
 		return preguntaExamenAssembler.toCollection(examen.getPreguntas());
 	}
 
