@@ -1,5 +1,7 @@
 package com.dim.autotestAPI.repositorios;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -38,5 +40,10 @@ public interface PreguntaRepositorio extends JpaRepository<PreguntaConID, Long> 
 		    @Param("videoURL") String videoURL,
 		    @Param("id") Long id
 		);
+	
+	@Transactional
+	@Query(value = "SELECT * FROM public.preguntas "
+					+ "LIMIT :numPreguntas", nativeQuery = true)
+	List<PreguntaConID> traerNPreguntas (@Param("numPreguntas") int numPreguntas);
 
 }

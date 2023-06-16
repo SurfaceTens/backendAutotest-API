@@ -20,6 +20,7 @@ import es.mde.acing.utils.PreguntaExamen;
 
 import com.dim.autotestAPI.REST.controllers.ExamenController;
 import com.dim.autotestAPI.REST.controllers.PreguntaController;
+import com.dim.autotestAPI.REST.controllers.PreguntaExamenController;
 
 @Component
 public class PreguntaExamenAssembler<T extends PreguntaExamen>

@@ -4,6 +4,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.hateoas.CollectionModel;
@@ -22,6 +23,7 @@ import com.dim.autotestAPI.REST.models.ExamenModel;
 import com.dim.autotestAPI.REST.models.ExamenPostModel;
 import com.dim.autotestAPI.REST.models.PreguntaExamenModel;
 import com.dim.autotestAPI.REST.models.PreguntaExamenPostModel;
+import com.dim.autotestAPI.REST.models.PreguntaModel;
 import com.dim.autotestAPI.entidades.AlumnoConID;
 import com.dim.autotestAPI.entidades.ExamenConID;
 import com.dim.autotestAPI.entidades.PreguntaConID;
@@ -45,8 +47,9 @@ public class PreguntaExamenController {
 	private final PreguntaExamenAssembler assembler;
 	private final ExamenAssembler examenAssembler;
 
-	PreguntaExamenController(PreguntaExamenRepositorio relacionRepositorio, PreguntaExamenAssembler assembler, ExamenAssembler examenAssembler,
-			ExamenRepositorio examenRepositorio, AlumnoRepositorio alumnoRepositorio, PreguntaRepositorio preguntaRepositorio) {
+	PreguntaExamenController(PreguntaExamenRepositorio relacionRepositorio, PreguntaExamenAssembler assembler,
+			ExamenAssembler examenAssembler, ExamenRepositorio examenRepositorio, AlumnoRepositorio alumnoRepositorio,
+			PreguntaRepositorio preguntaRepositorio) {
 		this.relacionRepositorio = relacionRepositorio;
 		this.examenRepositorio = examenRepositorio;
 		this.alumnoRepositorio = alumnoRepositorio;
@@ -77,41 +80,34 @@ public class PreguntaExamenController {
 	}
 
 	@PostMapping("generarExamen/{numPreguntas}/{idAlumno}")
-	public CollectionModel<PreguntaExamenModel> generarExamen(@PathVariable Long numPreguntas, @PathVariable Long idAlumno) {
-		PreguntaExamenConID relacion = new PreguntaExamenConID();
-		
+	public CollectionModel<PreguntaExamenModel> generarExamen(@PathVariable int numPreguntas,
+			@PathVariable Long idAlumno) {
+		List<PreguntaExamenConID> preguntasExamen = new ArrayList<>();
+
+		// Conseguir preguntas
+		List<PreguntaConID> preguntas = preguntaRepositorio.traerNPreguntas(numPreguntas);
+		Collections.shuffle(preguntas);
+
 		// Buscar alumno
 		AlumnoConID alumno = (AlumnoConID) alumnoRepositorio.findById(idAlumno)
 				.orElseThrow(() -> new RegisterNotFoundException(idAlumno, "Alumno"));
-		
+
 		// Crear examen
 		ExamenConID examen = new ExamenConID();
 		examen.setAlumno(alumno);
 		examenRepositorio.save(examen);
-		relacion.setExamen(examen);
-		
-		// Conseguir preguntas
-		List<PreguntaConID> preguntas = new ArrayList<>();
-		
-		for (Long i = (long) 1; i <= numPreguntas; i++) {
-			PreguntaConID pregunta = (PreguntaConID) preguntaRepositorio.findById(i)
-					.orElseThrow(() -> new RegisterNotFoundException(idAlumno, "Pregunta"));
+
+		// Añadir preguntas
+		for (PreguntaConID pregunta : preguntas) {
+			PreguntaExamenConID relacion = new PreguntaExamenConID();
 			relacion.setPregunta(pregunta);
 			relacion.setCorrecta(pregunta.getOpcionCorrecta());
-			
-			if (relacion.getCorrecta().equals(pregunta.getOpcionCorrecta())) {
-				relacion.setAcertada(true);
-			}
-			
-			preguntas.add(pregunta);
-			
-			System.err.println(pregunta.getId());
-			
-			// Guardar relacion
+			relacion.setExamen(examen);
 			relacionRepositorio.save(relacion);
+			preguntasExamen.add(relacion);
 		}
 
-		return assembler.toCollection(preguntas);
+		return assembler.toCollection(preguntasExamen);
 	}
 
 }
