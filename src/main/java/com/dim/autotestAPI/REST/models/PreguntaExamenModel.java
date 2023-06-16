@@ -12,6 +12,8 @@ public class PreguntaExamenModel extends RepresentationModel<PreguntaExamenModel
 	private String[] incorrectas;
 	private boolean acertada;
 
+	private String tematica;
+	private int dificultad;
 	private String enunciado;
 
 	public Long getId() {
@@ -60,6 +62,22 @@ public class PreguntaExamenModel extends RepresentationModel<PreguntaExamenModel
 
 	public void setIncorrectas(String[] incorrectas) {
 		this.incorrectas = incorrectas;
+	}
+
+	public String getTematica() {
+		return tematica;
+	}
+
+	public void setTematica(String tematica) {
+		this.tematica = tematica;
+	}
+
+	public int getDificultad() {
+		return dificultad;
+	}
+
+	public void setDificultad(int dificultad) {
+		this.dificultad = dificultad;
 	}
 
 }

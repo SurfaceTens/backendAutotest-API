@@ -30,6 +30,8 @@ public class PreguntaExamenAssembler<T extends PreguntaExamen>
 		model.setAcertada(entity.isAcertada());
 		model.setRespuesta(entity.getRespuesta());
 		model.setCorrecta(entity.getPregunta().getOpcionCorrecta());
+		model.setTematica(entity.getPregunta().getTematica());
+		model.setDificultad(entity.getPregunta().getDificultad());
 		model.setEnunciado(entity.getPregunta().getEnunciado());
 		String[] incorrectas = { entity.getPregunta().getOpcionInCorrecta1(),
 				entity.getPregunta().getOpcionInCorrecta2(), entity.getPregunta().getOpcionInCorrecta3() };
