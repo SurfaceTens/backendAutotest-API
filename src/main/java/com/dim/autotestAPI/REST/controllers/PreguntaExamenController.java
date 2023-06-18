@@ -67,7 +67,7 @@ public class PreguntaExamenController {
 		return assembler.toModel(post);
 	}
 
-	@PostMapping("generarExamen/{numPreguntas}/{idAlumno}")
+	@GetMapping("generarExamen/{numPreguntas}/{idAlumno}")
 	public CollectionModel<PreguntaExamenModel> generarExamen(@PathVariable int numPreguntas,
 			@PathVariable Long idAlumno) {
 		List<PreguntaExamenConID> preguntasExamen = new ArrayList<>();

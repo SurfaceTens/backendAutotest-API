@@ -3,6 +3,8 @@ package com.dim.autotestAPI.REST.models;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
+import es.mde.acing.utils.PreguntaImpl.Adjunto;
+
 @Relation(itemRelation = "preguntaexamen")
 public class PreguntaExamenModel extends RepresentationModel<PreguntaExamenModel> {
 
@@ -15,6 +17,9 @@ public class PreguntaExamenModel extends RepresentationModel<PreguntaExamenModel
 	private String tematica;
 	private int dificultad;
 	private String enunciado;
+	
+	private Adjunto adjunto;
+	private String adjuntoURL;
 
 	public Long getId() {
 		return id;
@@ -78,6 +83,22 @@ public class PreguntaExamenModel extends RepresentationModel<PreguntaExamenModel
 
 	public void setDificultad(int dificultad) {
 		this.dificultad = dificultad;
+	}
+
+	public Adjunto getAdjunto() {
+		return adjunto;
+	}
+
+	public void setAdjunto(Adjunto adjunto) {
+		this.adjunto = adjunto;
+	}
+
+	public String getAdjuntoURL() {
+		return adjuntoURL;
+	}
+
+	public void setAdjuntoURL(String adjuntoURL) {
+		this.adjuntoURL = adjuntoURL;
 	}
 
 }
