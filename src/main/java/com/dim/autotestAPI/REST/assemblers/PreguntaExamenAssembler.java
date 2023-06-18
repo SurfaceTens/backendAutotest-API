@@ -13,11 +13,10 @@ import org.springframework.stereotype.Component;
 import com.dim.autotestAPI.REST.models.PreguntaExamenModel;
 import com.dim.autotestAPI.REST.models.PreguntaExamenPostModel;
 import com.dim.autotestAPI.entidades.ExamenConID;
-import com.dim.autotestAPI.entidades.PreguntaConImagen;
-import com.dim.autotestAPI.entidades.PreguntaConVideo;
 import com.dim.autotestAPI.entidades.PreguntaExamenConID;
 
-import ch.qos.logback.core.joran.conditional.ThenAction;
+import es.mde.acing.utils.ConImagen;
+import es.mde.acing.utils.ConVideo;
 import es.mde.acing.utils.PreguntaExamen;
 import es.mde.acing.utils.PreguntaImpl.Adjunto;
 
@@ -40,13 +39,14 @@ public class PreguntaExamenAssembler<T extends PreguntaExamen>
 		String[] incorrectas = { entity.getPregunta().getOpcionInCorrecta1(),
 				entity.getPregunta().getOpcionInCorrecta2(), entity.getPregunta().getOpcionInCorrecta3() };
 		model.setIncorrectas(incorrectas);
-//		model.setAdjunto(entity.getPregunta().getAdjunto());
-//		
-//		if (entity.getPregunta().getAdjunto().equals(Adjunto.imagen)) {
-//			model.setAdjuntoURL(((PreguntaConImagen) entity.getPregunta()).getImagenURL());
-//		} else if (entity.getPregunta().getAdjunto().equals(Adjunto.video)) {
-//			model.setAdjuntoURL(((PreguntaConVideo) entity.getPregunta()).getVideoURL());
-//		}
+		
+		if (entity.getPregunta().getAdjunto() == Adjunto.video) {
+			model.setAdjuntoURL(((ConVideo) entity).getVideoURL());
+			model.setAdjunto(Adjunto.video);
+		} else if (entity.getPregunta().getAdjunto() == Adjunto.imagen) {
+			model.setAdjuntoURL(((ConImagen) entity).getImagenURL());
+			model.setAdjunto(Adjunto.imagen);
+		}
 
 		model.add(
 				linkTo(methodOn(ExamenController.class).one(((ExamenConID) entity.getExamen()).getId())).withRel("examen")
