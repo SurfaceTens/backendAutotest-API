@@ -8,6 +8,7 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +30,7 @@ import com.dim.autotestAPI.repositorios.PreguntaRepositorio;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/preguntaExamen")
+@RequestMapping("/preguntasExamen")
 public class PreguntaExamenController {
 
 	private final PreguntaExamenRepositorio relacionRepositorio;
@@ -65,6 +66,19 @@ public class PreguntaExamenController {
 		PreguntaExamenConID post = relacionRepositorio.save(assembler.toEntity(model));
 
 		return assembler.toModel(post);
+	}
+	
+	@PutMapping("{id}")
+	public PreguntaExamenModel edit(@PathVariable Long id, @RequestBody PreguntaExamenModel model) {		
+		PreguntaExamenConID editar = relacionRepositorio.findById(id).map(edt -> {
+
+			edt.setAcertada(model.isAcertada());
+			edt.setRespuesta(model.getRespuesta());
+
+			return relacionRepositorio.save(edt);
+		}).orElseThrow(() -> new RegisterNotFoundException(id, "Examen"));
+
+		return assembler.toModel(editar);
 	}
 
 	@GetMapping("generarExamen/{numPreguntas}/{idAlumno}")

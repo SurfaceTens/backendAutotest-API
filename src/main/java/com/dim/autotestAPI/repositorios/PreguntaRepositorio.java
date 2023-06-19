@@ -42,8 +42,8 @@ public interface PreguntaRepositorio extends JpaRepository<PreguntaConID, Long> 
 		);
 	
 	@Transactional
-	@Query(value = "SELECT * FROM public.preguntas "
+	@Query(value = "SELECT * FROM public.preguntas ORDER BY RANDOM() "
 					+ "LIMIT :numPreguntas", nativeQuery = true)
 	List<PreguntaConID> traerNPreguntas (@Param("numPreguntas") int numPreguntas);
-
+	
 }
