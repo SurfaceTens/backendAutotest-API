@@ -14,4 +14,9 @@ public class PreguntaExamenConID extends PreguntaExamenImpl {
 		this.id = id;
 	}
 
+	@Override
+	public String toString() {
+		return "PreguntaExamenConID [id=" + id + "]";
+	}
+
 }

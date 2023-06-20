@@ -16,7 +16,7 @@ public class PreguntaConID extends PreguntaImpl{
 
 	@Override
 	public String toString() {
-		return "PREGUNTA [" + getEnunciado() + "]";
+		return "Pregunta con " + getAdjunto() + "[" + getEnunciado() + "]";
 	}
 
 }

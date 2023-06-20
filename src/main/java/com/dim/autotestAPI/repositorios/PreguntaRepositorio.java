@@ -15,19 +15,17 @@ import jakarta.transaction.Transactional;
 @Repository
 public interface PreguntaRepositorio extends JpaRepository<PreguntaConID, Long>  {
 	
-	// Para la herencia en el put
-		@Modifying
-		@Transactional
-		@Query(value = "UPDATE public.preguntas SET "
-						+ "adjunto = 'ninguno', "
-						+ "imagenurl = null "
-						+ "videourl = null "
-						+ "WHERE id = :id", nativeQuery = true)
-		void actualizarNinguno(
-			    @Param("id") Long id
-			);
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE public.preguntas SET "
+					+ "adjunto = 'ninguno', "
+					+ "imagenurl = null, "
+					+ "videourl = null "
+					+ "WHERE id = :id", nativeQuery = true)
+	void actualizarNinguno(
+		    @Param("id") Long id
+		);
 	
-	// Para la herencia en el put
 	@Modifying
 	@Transactional
 	@Query(value = "UPDATE public.preguntas SET "
@@ -40,7 +38,6 @@ public interface PreguntaRepositorio extends JpaRepository<PreguntaConID, Long> 
 		    @Param("id") Long id
 		);
 	
-	// Para la herencia en el put
 	@Modifying
 	@Transactional
 	@Query(value = "UPDATE public.preguntas SET "

@@ -73,8 +73,6 @@ public class ExamenController {
 
 			return examenRepositorio.save(edt);
 		}).orElseThrow(() -> new RegisterNotFoundException(id, "Examen"));
-		// Los log
-//		log.info("Actualizado " + editar);
 		return examenAssembler.toModel(editar);
 	}
 

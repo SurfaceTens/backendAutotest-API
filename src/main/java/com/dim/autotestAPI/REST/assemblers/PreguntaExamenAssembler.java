@@ -81,7 +81,7 @@ public class PreguntaExamenAssembler<T extends PreguntaExamen>
 
 	public PreguntaExamenConID toEntity(PreguntaExamenPostModel model) {
 		PreguntaExamenConID entity = new PreguntaExamenConID();
-		entity.setAcertada(false); // Hasta que no se haga el examen es false
+		entity.setAcertada(false); // Hasta que no se haga el examen debe ser false
 		entity.setRespuesta(model.getRespuesta());
 		entity.setCorrecta(model.getCorrecta());
 

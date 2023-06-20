@@ -19,5 +19,5 @@ public class PreguntaConImagen extends PreguntaConID implements ConImagen{
 	public Adjunto getAdjunto() {
 		return Adjunto.imagen;
 	}
-
+	
 }
