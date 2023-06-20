@@ -55,7 +55,6 @@ public class PreguntaExamenAssembler<T extends PreguntaExamen>
 //			model.setAdjuntoURL(((ConVideo) entity.getPregunta()).getVideoURL());
 //			model.setAdjunto(Adjunto.video);
 //		} else if (entity.getPregunta().getAdjunto() == Adjunto.imagen) {
-//			System.err.println(entity.getClass().getSimpleName());
 //			model.setAdjuntoURL(((ConImagen) entity.getPregunta()).getImagenURL());
 //			model.setAdjunto(Adjunto.imagen);
 //		}
