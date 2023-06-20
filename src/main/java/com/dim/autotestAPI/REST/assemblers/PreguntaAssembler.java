@@ -41,6 +41,10 @@ public class PreguntaAssembler implements RepresentationModelAssembler<PreguntaC
 			model.setImagenURL(((ConImagen) entity).getImagenURL());
 			model.setVideoURL(null);
 			model.setAdjunto(Adjunto.imagen);
+		} else {
+			model.setImagenURL(null);
+			model.setVideoURL(null);
+			model.setAdjunto(Adjunto.ninguno);
 		}
 
 		int numExamenes = entity.getExamenes() != null ? entity.getExamenes().size() : 0;

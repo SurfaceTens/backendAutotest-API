@@ -103,6 +103,8 @@ public class PreguntaController {
 			} else if (model.getAdjunto() == Adjunto.video) {
 				new PreguntaConVideo();
 				repositorio.actualizarVideo(model.getVideoURL(), id);
+			} else {
+				repositorio.actualizarNinguno(id);
 			}
 
 			edt.setTematica(model.getTematica());

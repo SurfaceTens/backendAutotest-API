@@ -6,6 +6,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.hibernate.Session;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
@@ -13,6 +15,9 @@ import org.springframework.stereotype.Component;
 import com.dim.autotestAPI.REST.models.PreguntaExamenModel;
 import com.dim.autotestAPI.REST.models.PreguntaExamenPostModel;
 import com.dim.autotestAPI.entidades.ExamenConID;
+import com.dim.autotestAPI.entidades.PreguntaConID;
+import com.dim.autotestAPI.entidades.PreguntaConImagen;
+import com.dim.autotestAPI.entidades.PreguntaConVideo;
 import com.dim.autotestAPI.entidades.PreguntaExamenConID;
 
 import es.mde.acing.utils.ConImagen;
@@ -22,9 +27,14 @@ import es.mde.acing.utils.PreguntaImpl.Adjunto;
 
 import com.dim.autotestAPI.REST.controllers.ExamenController;
 
+import jakarta.persistence.EntityManager;
+
 @Component
 public class PreguntaExamenAssembler<T extends PreguntaExamen>
 		implements RepresentationModelAssembler<T, PreguntaExamenModel> {
+	
+	@Autowired
+	private EntityManager entityManager;
 
 	@Override
 	public PreguntaExamenModel toModel(T entity) {
@@ -40,13 +50,29 @@ public class PreguntaExamenAssembler<T extends PreguntaExamen>
 				entity.getPregunta().getOpcionInCorrecta2(), entity.getPregunta().getOpcionInCorrecta3() };
 		model.setIncorrectas(incorrectas);
 		
+		// Este es el if que yo hice
+//		if (entity.getPregunta().getAdjunto() == Adjunto.video) {
+//			model.setAdjuntoURL(((ConVideo) entity.getPregunta()).getVideoURL());
+//			model.setAdjunto(Adjunto.video);
+//		} else if (entity.getPregunta().getAdjunto() == Adjunto.imagen) {
+//			System.err.println(entity.getClass().getSimpleName());
+//			model.setAdjuntoURL(((ConImagen) entity.getPregunta()).getImagenURL());
+//			model.setAdjunto(Adjunto.imagen);
+//		}
+		
+		// Este es el if que hace la ia para solucionar el problema del cast
 		if (entity.getPregunta().getAdjunto() == Adjunto.video) {
-			model.setAdjuntoURL(((ConVideo) entity).getVideoURL());
-			model.setAdjunto(Adjunto.video);
-		} else if (entity.getPregunta().getAdjunto() == Adjunto.imagen) {
-			model.setAdjuntoURL(((ConImagen) entity).getImagenURL());
-			model.setAdjunto(Adjunto.imagen);
-		}
+            Session session = entityManager.unwrap(Session.class);
+            PreguntaConVideo preguntaConVideo = session.get(PreguntaConVideo.class, ((PreguntaConID) entity.getPregunta()).getId());
+            model.setAdjuntoURL(preguntaConVideo.getVideoURL());
+            model.setAdjunto(Adjunto.video);
+        } else if (entity.getPregunta().getAdjunto() == Adjunto.imagen) {
+            Session session = entityManager.unwrap(Session.class);
+            PreguntaConImagen preguntaConImagen = session.get(PreguntaConImagen.class, ((PreguntaConID) entity.getPregunta()).getId());
+            model.setAdjuntoURL(preguntaConImagen.getImagenURL());
+            model.setAdjunto(Adjunto.imagen);
+        }
+
 
 		model.add(
 				linkTo(methodOn(ExamenController.class).one(((ExamenConID) entity.getExamen()).getId())).withRel("examen")

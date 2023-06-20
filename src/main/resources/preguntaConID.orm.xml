@@ -8,7 +8,7 @@
     <entity class="com.dim.autotestAPI.entidades.PreguntaConID" access="FIELD">
         <table name="PREGUNTAS" />
         <inheritance strategy="SINGLE_TABLE" />
-        <discriminator-value>null</discriminator-value>
+        <discriminator-value>ninguno</discriminator-value>
         <discriminator-column name="adjunto" />
         <attributes>
             <id name="id">

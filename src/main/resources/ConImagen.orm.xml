@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
     version="1.0">
     <entity class="com.dim.autotestAPI.entidades.PreguntaConImagen" access="FIELD">
-        <discriminator-value>I</discriminator-value>
+        <discriminator-value>imagen</discriminator-value>
         <attributes>
             <basic name="imagenURL" />
         </attributes>

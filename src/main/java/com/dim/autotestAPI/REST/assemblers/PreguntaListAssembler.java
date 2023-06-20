@@ -33,13 +33,19 @@ public class PreguntaListAssembler<T extends Pregunta> implements Representation
 		model.setOpcionIncorrecta1(entity.getOpcionInCorrecta1());
 		model.setOpcionIncorrecta2(entity.getOpcionInCorrecta2());
 		model.setOpcionIncorrecta3(entity.getOpcionInCorrecta3());
-
+		
 		if (entity.getAdjunto() == Adjunto.video) {
 			model.setVideoURL(((ConVideo) entity).getVideoURL());
+			model.setImagenURL(null);
 			model.setAdjunto(Adjunto.video);
 		} else if (entity.getAdjunto() == Adjunto.imagen) {
-			model.setVideoURL(((ConImagen) entity).getImagenURL());
+			model.setImagenURL(((ConImagen) entity).getImagenURL());
+			model.setVideoURL(null);
 			model.setAdjunto(Adjunto.imagen);
+		} else {
+			model.setImagenURL(null);
+			model.setVideoURL(null);
+			model.setAdjunto(Adjunto.ninguno);
 		}
 
 		int numExamenes = entity.getExamenes() != null ? entity.getExamenes().size() : 0;
