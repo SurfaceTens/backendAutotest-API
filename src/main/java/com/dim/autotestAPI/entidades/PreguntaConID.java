@@ -5,6 +5,10 @@ import es.mde.acing.utils.PreguntaImpl;
 public class PreguntaConID extends PreguntaImpl{
 
 	private Long id;
+	
+	public static enum NivelDificultad {
+		facil, dificil, aleatorio
+	}
 
 	public Long getId() {
 		return id;
