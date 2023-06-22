@@ -22,6 +22,7 @@ import com.dim.autotestAPI.REST.models.PreguntaExamenPostModel;
 import com.dim.autotestAPI.entidades.AlumnoConID;
 import com.dim.autotestAPI.entidades.ExamenConID;
 import com.dim.autotestAPI.entidades.PreguntaConID;
+import com.dim.autotestAPI.entidades.PreguntaConID.NivelDificultad;
 import com.dim.autotestAPI.entidades.PreguntaExamenConID;
 import com.dim.autotestAPI.repositorios.AlumnoRepositorio;
 import com.dim.autotestAPI.repositorios.ExamenRepositorio;
@@ -81,12 +82,34 @@ public class PreguntaExamenController {
 		return assembler.toModel(editar);
 	}
 
-	@GetMapping("generarExamen/{numPreguntas}/{idAlumno}")
+	@GetMapping("generarExamen/{numPreguntas}/{idAlumno}/{dificultad}")
 	public CollectionModel<PreguntaExamenModel> generarExamen(@PathVariable int numPreguntas,
-			@PathVariable Long idAlumno) {
+			@PathVariable Long idAlumno, @PathVariable NivelDificultad dificultad) {
 		List<PreguntaExamenConID> preguntasExamen = new ArrayList<>();
+		List<PreguntaConID> preguntas = new ArrayList<>();
+		
+		if ((dificultad != NivelDificultad.facil) && (dificultad != NivelDificultad.dificil)) {
+			dificultad = NivelDificultad.aleatorio;
+		}		
+		
+		switch (dificultad) {
+		case facil :
+			preguntas = preguntaRepositorio.traerNPreguntasDificultadMenor(numPreguntas);
+			break;
+			
+		case dificil:
+			preguntas = preguntaRepositorio.traerNPreguntasDificultadMayor(numPreguntas);
+			break;
+			
+		case aleatorio:
+			preguntas = preguntaRepositorio.traerNPreguntas(numPreguntas);
+			break;
 
-		List<PreguntaConID> preguntas = preguntaRepositorio.traerNPreguntas(numPreguntas);
+		default:
+			preguntas = preguntaRepositorio.traerNPreguntas(numPreguntas);
+			break;
+		}
+		
 		Collections.shuffle(preguntas);
 
 		AlumnoConID alumno = (AlumnoConID) alumnoRepositorio.findById(idAlumno)

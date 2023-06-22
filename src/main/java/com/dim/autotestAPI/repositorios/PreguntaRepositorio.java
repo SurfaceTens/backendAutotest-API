@@ -55,4 +55,18 @@ public interface PreguntaRepositorio extends JpaRepository<PreguntaConID, Long> 
 					+ "LIMIT :numPreguntas", nativeQuery = true)
 	List<PreguntaConID> traerNPreguntas (@Param("numPreguntas") int numPreguntas);
 	
+	@Transactional
+	@Query(value = "SELECT * FROM public.preguntas "
+					+ "WHERE dificultad >= 50 "
+					+ "ORDER BY RANDOM() "
+					+ "LIMIT :numPreguntas", nativeQuery = true)
+	List<PreguntaConID> traerNPreguntasDificultadMayor (@Param("numPreguntas") int numPreguntas);
+	
+	@Transactional
+	@Query(value = "SELECT * FROM public.preguntas "
+					+ "WHERE dificultad <= 50 "
+					+ "ORDER BY RANDOM() "
+					+ "LIMIT :numPreguntas", nativeQuery = true)
+	List<PreguntaConID> traerNPreguntasDificultadMenor (@Param("numPreguntas") int numPreguntas);
+	
 }
