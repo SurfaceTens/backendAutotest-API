@@ -70,7 +70,6 @@ public class ExamenController {
 		ExamenConID editar = examenRepositorio.findById(id).map(edt -> {
 
 			edt.setNota(model.getNota());
-			edt.setAlumno(model.getAlumno());
 
 			return examenRepositorio.save(edt);
 		}).orElseThrow(() -> new RegisterNotFoundException(id, "Examen"));
