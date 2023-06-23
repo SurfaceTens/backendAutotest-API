@@ -20,9 +20,11 @@ public class ExamenAssembler implements RepresentationModelAssembler<ExamenConID
 	public ExamenModel toModel(ExamenConID entity) {
 		ExamenModel model = new ExamenModel();
 		model.setId(entity.getId());
+		model.setNota(entity.getNota());
 
 		int numPreguntas = entity.getPreguntas() != null ? entity.getPreguntas().size() : 0;
 		model.setNumPreguntas(numPreguntas);
+		
 
 		model.add(linkTo(methodOn(ExamenController.class).one(((ExamenConID) entity).getId())).withSelfRel(),
 				linkTo(methodOn(AlumnoController.class).one(((AlumnoConID) entity.getAlumno()).getId()))
@@ -34,6 +36,7 @@ public class ExamenAssembler implements RepresentationModelAssembler<ExamenConID
 	public ExamenConID toEntity(ExamenPostModel model) {
 		ExamenConID entity = new ExamenConID();
 		entity.setAlumno(model.getAlumno());
+		entity.setNota(model.getNota());
 
 		return entity;
 	}

@@ -9,6 +9,7 @@ import com.dim.autotestAPI.entidades.AlumnoConID;
 public class ExamenPostModel extends RepresentationModel<ExamenPostModel> {
 
 	private AlumnoConID alumno;
+	private int nota;
 
 	public AlumnoConID getAlumno() {
 		return alumno;
@@ -16,6 +17,14 @@ public class ExamenPostModel extends RepresentationModel<ExamenPostModel> {
 
 	public void setAlumno(AlumnoConID alumno) {
 		this.alumno = alumno;
+	}
+
+	public int getNota() {
+		return nota;
+	}
+
+	public void setNota(int nota) {
+		this.nota = nota;
 	}
 
 }

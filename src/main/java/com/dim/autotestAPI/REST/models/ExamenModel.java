@@ -12,6 +12,7 @@ public class ExamenModel extends RepresentationModel<ExamenModel> {
 
 	private AlumnoConID alumno;
 	private int numPreguntas;
+	private int nota;
 
 	public Long getId() {
 		return id;
@@ -35,6 +36,14 @@ public class ExamenModel extends RepresentationModel<ExamenModel> {
 
 	public void setAlumno(AlumnoConID alumno) {
 		this.alumno = alumno;
+	}
+
+	public int getNota() {
+		return nota;
+	}
+
+	public void setNota(int nota) {
+		this.nota = nota;
 	}
 
 }

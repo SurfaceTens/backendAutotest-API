@@ -7,6 +7,8 @@
 	<mapped-superclass class="es.mde.acing.utils.ExamenImpl" access="FIELD">
 		<attributes>
 			
+			<basic name="nota" />
+			
 			<many-to-one name="alumno" fetch="LAZY" optional="false"
 				target-entity="com.dim.autotestAPI.entidades.AlumnoConID">
 				<join-column name="alumno_id" referenced-column-name="ID" />
