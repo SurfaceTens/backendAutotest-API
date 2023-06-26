@@ -20,7 +20,11 @@ public class ExamenAssembler implements RepresentationModelAssembler<ExamenConID
 	public ExamenModel toModel(ExamenConID entity) {
 		ExamenModel model = new ExamenModel();
 		model.setId(entity.getId());
+		model.setEntregado(entity.isEntregado());
 		model.setNota(entity.getNota());
+		model.setAciertos(entity.getAciertos());
+		model.setFallos(entity.getFallos());
+		model.setAlumnoDatos(entity.getAlumno().getNombre() + " " + entity.getAlumno().getApellidos());
 
 		int numPreguntas = entity.getPreguntas() != null ? entity.getPreguntas().size() : 0;
 		model.setNumPreguntas(numPreguntas);
@@ -36,7 +40,10 @@ public class ExamenAssembler implements RepresentationModelAssembler<ExamenConID
 	public ExamenConID toEntity(ExamenPostModel model) {
 		ExamenConID entity = new ExamenConID();
 		entity.setAlumno(model.getAlumno());
+		entity.setEntregado(model.isEntregado());
 		entity.setNota(model.getNota());
+		entity.setAciertos(model.getAciertos());
+		entity.setFallos(model.getFallos());
 
 		return entity;
 	}

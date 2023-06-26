@@ -26,7 +26,11 @@ public class ExamenListAssembler<T extends Examen> implements RepresentationMode
 	public ExamenModel toModel(T entity) {
 		ExamenModel model = new ExamenModel();
 		model.setId(((ExamenConID) entity).getId());
+		model.setEntregado(entity.isEntregado());
 		model.setNota(((ExamenConID) entity).getNota());
+		model.setAciertos(((ExamenConID) entity).getAciertos());
+		model.setFallos(((ExamenConID) entity).getFallos());
+		model.setAlumnoDatos(entity.getAlumno().getNombre() + " " + entity.getAlumno().getApellidos());
 
 		int numPreguntas = ((ExamenConID) entity).getPreguntas() != null ? ((ExamenConID) entity).getPreguntas().size()
 				: 0;

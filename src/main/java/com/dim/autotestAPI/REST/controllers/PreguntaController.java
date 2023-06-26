@@ -86,6 +86,11 @@ public class PreguntaController {
 	public CollectionModel<PreguntaModel> all() {
 		return preguntaListAssembler.toCollection(repositorio.findAll());
 	}
+	
+	@GetMapping("/total")
+	public int total() {
+	    return repositorio.findAll().size();
+	}
 
 	@PostMapping
 	public PreguntaModel add(@RequestBody PreguntaPostModel model) {

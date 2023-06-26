@@ -7,6 +7,9 @@
 	<mapped-superclass class="es.mde.acing.utils.ExamenImpl" access="FIELD">
 		<attributes>
 			
+			<basic name="entregado" />
+			<basic name="aciertos" />
+			<basic name="fallos" />
 			<basic name="nota" />
 			
 			<many-to-one name="alumno" fetch="LAZY" optional="false"
