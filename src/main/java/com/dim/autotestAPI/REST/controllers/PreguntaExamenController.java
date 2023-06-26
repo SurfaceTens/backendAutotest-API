@@ -117,6 +117,13 @@ public class PreguntaExamenController {
 
 		ExamenConID examen = new ExamenConID();
 		examen.setAlumno(alumno);
+		
+		// Vacios porque todavia no se ha hecho
+		examen.setNota("");
+		examen.setAciertos(0);
+		examen.setFallos(0);
+		
+		
 		examenRepositorio.save(examen);
 
 		for (PreguntaConID pregunta : preguntas) {
