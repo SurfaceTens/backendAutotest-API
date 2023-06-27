@@ -21,7 +21,7 @@ public class PreguntaPostModel extends RepresentationModel<PreguntaPostModel> {
 
 	private List<PreguntaExamen> examenes;
 
-	private String imagenURL;
+	private String imagenBase64;
 	private String videoURL;
 	private Adjunto adjunto;
 
@@ -81,12 +81,12 @@ public class PreguntaPostModel extends RepresentationModel<PreguntaPostModel> {
 		this.opcionIncorrecta3 = opcionIncorrecta3;
 	}
 
-	public String getImagenURL() {
-		return imagenURL;
+	public String getImagenBase64() {
+		return imagenBase64;
 	}
 
-	public void setImagenURL(String imagenURL) {
-		this.imagenURL = imagenURL;
+	public void setImagenBase64(String imagenBase64) {
+		this.imagenBase64 = imagenBase64;
 	}
 
 	public String getVideoURL() {
