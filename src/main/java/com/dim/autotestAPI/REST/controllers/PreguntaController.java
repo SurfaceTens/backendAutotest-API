@@ -86,6 +86,11 @@ public class PreguntaController {
 	public CollectionModel<PreguntaModel> all() {
 		return preguntaListAssembler.toCollection(repositorio.findAll());
 	}
+	
+	@GetMapping("/total")
+	public int total() {
+	    return repositorio.findAll().size();
+	}
 
 	@PostMapping
 	public PreguntaModel add(@RequestBody PreguntaPostModel model) {
@@ -99,7 +104,7 @@ public class PreguntaController {
 
 			if (model.getAdjunto() == Adjunto.imagen) {
 				new PreguntaConImagen();
-				repositorio.actualizarImagen(model.getImagenURL(), id);
+				repositorio.actualizarImagen(((PreguntaConImagen) preguntaAssembler.toEntity(model)).getImagen(), id);
 			} else if (model.getAdjunto() == Adjunto.video) {
 				new PreguntaConVideo();
 				repositorio.actualizarVideo(model.getVideoURL(), id);

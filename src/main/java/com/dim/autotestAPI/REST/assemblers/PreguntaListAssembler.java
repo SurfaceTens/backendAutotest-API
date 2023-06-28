@@ -36,14 +36,14 @@ public class PreguntaListAssembler<T extends Pregunta> implements Representation
 		
 		if (entity.getAdjunto() == Adjunto.video) {
 			model.setVideoURL(((ConVideo) entity).getVideoURL());
-			model.setImagenURL(null);
+			model.setImagenBase64(null);
 			model.setAdjunto(Adjunto.video);
 		} else if (entity.getAdjunto() == Adjunto.imagen) {
-			model.setImagenURL(((ConImagen) entity).getImagenURL());
+			model.setImagenBase64(((ConImagen) entity).getImagenBase64());
 			model.setVideoURL(null);
 			model.setAdjunto(Adjunto.imagen);
 		} else {
-			model.setImagenURL(null);
+			model.setImagenBase64(null);
 			model.setVideoURL(null);
 			model.setAdjunto(Adjunto.ninguno);
 		}

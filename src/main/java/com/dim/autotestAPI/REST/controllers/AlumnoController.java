@@ -49,6 +49,11 @@ public class AlumnoController {
 	public CollectionModel<AlumnoModel> all() {
 		return alumnoAssembler.toCollection(alumnoRepositorio.findAll());
 	}
+	
+	@GetMapping("/total")
+	public int total() {
+	    return alumnoRepositorio.findAll().size();
+	}
 
 	@GetMapping("{id}/examenes")
 	public CollectionModel<AlumnoModel> examenes(@PathVariable Long id) {

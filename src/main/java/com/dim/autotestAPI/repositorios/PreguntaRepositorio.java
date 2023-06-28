@@ -19,7 +19,7 @@ public interface PreguntaRepositorio extends JpaRepository<PreguntaConID, Long> 
 	@Transactional
 	@Query(value = "UPDATE public.preguntas SET "
 					+ "adjunto = 'ninguno', "
-					+ "imagenurl = null, "
+					+ "imagen = null, "
 					+ "videourl = null "
 					+ "WHERE id = :id", nativeQuery = true)
 	void actualizarNinguno(
@@ -29,21 +29,21 @@ public interface PreguntaRepositorio extends JpaRepository<PreguntaConID, Long> 
 	@Modifying
 	@Transactional
 	@Query(value = "UPDATE public.preguntas SET "
-					+ "adjunto = 'imagen', "
-					+ "imagenurl = :imagenURL, "
-					+ "videourl = null "
-					+ "WHERE id = :id", nativeQuery = true)
+	                + "adjunto = 'imagen', "
+	                + "imagen = :imagen, "
+	                + "videourl = null "
+	                + "WHERE id = :id", nativeQuery = true)
 	void actualizarImagen(
-		    @Param("imagenURL") String imagenURL,
-		    @Param("id") Long id
-		);
+	        @Param("imagen") byte[] imagen,
+	        @Param("id") Long id
+	);
 	
 	@Modifying
 	@Transactional
 	@Query(value = "UPDATE public.preguntas SET "
 					+ "adjunto = 'video', "
 					+ "videourl = :videoURL, "
-					+ "imagenurl = null "
+					+ "imagen = null "
 					+ "WHERE id = :id", nativeQuery = true)
 	void actualizarVideo(
 		    @Param("videoURL") String videoURL,
