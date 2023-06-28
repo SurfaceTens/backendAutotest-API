@@ -3,14 +3,12 @@
 /api
 ├── /alumnos
 │   ├── GET: all(void): List<AlumnoModel>
-│   ├── GET: /{id}
-│   │   ├── GET: one(void): AlumnoModel
-│   │   ├── GET: preguntas(void): List<PreguntaModel>
-│   │   ├── POST: add(AlumnoPostModel): AlumnoModel
-│   │   ├── PUT: edit(AlumnoPostModel): AlumnoModel
-│   │   └── DEL: delete/{id}(Long): HttpStatus
-│   └── GET: /total
-│       └── GET: total(void): int
+│   └── /{id}
+│       ├── GET: one(void): AlumnoModel
+│       ├── GET: preguntas(void): List<PreguntaModel>
+│       ├── POST: add(AlumnoPostModel): AlumnoModel
+│       ├── PUT: edit(AlumnoPostModel): AlumnoModel
+│       └── DEL: delete/{id}(Long): HttpStatus
 │
 ├── /preguntas
 │   ├── GET: all(void): List<PreguntaModel>
@@ -22,6 +20,15 @@
 │   │   └── DEL: delete/{id}(Long): HttpStatus
 │   └── GET: /total
 │       └── GET: total(void): int
+│
+├── /examenes
+│   ├── GET: all(void): List<ExamenModel>
+│   └── /{id}
+│       ├── GET: one(void): PreguntaModel
+│       ├── GET: examenes(void): List<ExamenModel>
+│       ├── POST: add(PreguntaPostModel): PreguntaModel
+│       ├── PUT: edit(PreguntaPostModel): PreguntaModel
+│       └── DEL: delete/{id}(Long): HttpStatus
 │
 ├── /examenes
 │   ├── GET: all(void): List<ExamenModel>
