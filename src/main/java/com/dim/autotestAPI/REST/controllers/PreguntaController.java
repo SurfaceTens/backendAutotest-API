@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.dim.autotestAPI.REST.assemblers.PreguntaAssembler;
 import com.dim.autotestAPI.REST.assemblers.PreguntaListAssembler;
+import com.dim.autotestAPI.REST.assemblers.PreguntaQuickListAssembler;
 import com.dim.autotestAPI.REST.excepciones.RegisterNotFoundException;
 import com.dim.autotestAPI.REST.models.PreguntaModel;
 import com.dim.autotestAPI.REST.models.PreguntaPostModel;
@@ -38,12 +39,15 @@ public class PreguntaController {
 	private final PreguntaRepositorio repositorio;
 	private final PreguntaAssembler preguntaAssembler;
 	private final PreguntaListAssembler preguntaListAssembler;
+	private final PreguntaQuickListAssembler preguntaQuickListAssembler;
 
 	PreguntaController(PreguntaRepositorio repositorio, PreguntaAssembler preguntaAssembler,
-			AlumnoRepositorio alRepositorio, PreguntaListAssembler preguntaListAssembler) {
+			AlumnoRepositorio alRepositorio, PreguntaListAssembler preguntaListAssembler,
+			PreguntaQuickListAssembler preguntaQuickListAssembler) {
 		this.repositorio = repositorio;
 		this.preguntaAssembler = preguntaAssembler;
 		this.preguntaListAssembler = preguntaListAssembler;
+		this.preguntaQuickListAssembler = preguntaQuickListAssembler;
 	}
 
 	@GetMapping("{id}")
@@ -84,7 +88,7 @@ public class PreguntaController {
 
 	@GetMapping
 	public CollectionModel<PreguntaModel> all() {
-		return preguntaListAssembler.toCollection(repositorio.findAll());
+		return preguntaQuickListAssembler.toCollection(repositorio.findAll());
 	}
 	
 	@GetMapping("/total")
