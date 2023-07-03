@@ -23,7 +23,7 @@ public class PreguntaModel extends RepresentationModel<PreguntaModel> {
 	private List<PreguntaExamen> examenes;
 	private int numExamenes;
 
-	private String imagenURL;
+	private String imagenBase64;
 	private String videoURL;
 	private Adjunto adjunto;
 
@@ -99,12 +99,12 @@ public class PreguntaModel extends RepresentationModel<PreguntaModel> {
 		this.numExamenes = numExamenes;
 	}
 
-	public String getImagenURL() {
-		return imagenURL;
+	public String getImagenBase64() {
+		return imagenBase64;
 	}
 
-	public void setImagenURL(String imagenURL) {
-		this.imagenURL = imagenURL;
+	public void setImagenBase64(String imagenBase64) {
+		this.imagenBase64 = imagenBase64;
 	}
 
 	public String getVideoURL() {

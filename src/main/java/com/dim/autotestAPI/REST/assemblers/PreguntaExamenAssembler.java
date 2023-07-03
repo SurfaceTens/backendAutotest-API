@@ -55,11 +55,11 @@ public class PreguntaExamenAssembler<T extends PreguntaExamen>
 //			model.setAdjuntoURL(((ConVideo) entity.getPregunta()).getVideoURL());
 //			model.setAdjunto(Adjunto.video);
 //		} else if (entity.getPregunta().getAdjunto() == Adjunto.imagen) {
-//			model.setAdjuntoURL(((ConImagen) entity.getPregunta()).getImagenURL());
+//			model.setAdjuntoURL(((ConImagen) entity.getPregunta()).getImagenBase64());
 //			model.setAdjunto(Adjunto.imagen);
 //		}
 		
-		// Este es el if que hace la ia para solucionar el problema del cast
+		// Este es el if que soluciona el problema del cast
 		if (entity.getPregunta().getAdjunto() == Adjunto.video) {
             Session session = entityManager.unwrap(Session.class);
             PreguntaConVideo preguntaConVideo = session.get(PreguntaConVideo.class, ((PreguntaConID) entity.getPregunta()).getId());
@@ -68,7 +68,7 @@ public class PreguntaExamenAssembler<T extends PreguntaExamen>
         } else if (entity.getPregunta().getAdjunto() == Adjunto.imagen) {
             Session session = entityManager.unwrap(Session.class);
             PreguntaConImagen preguntaConImagen = session.get(PreguntaConImagen.class, ((PreguntaConID) entity.getPregunta()).getId());
-            model.setAdjuntoURL(preguntaConImagen.getImagenURL());
+            model.setAdjuntoURL(preguntaConImagen.getImagenBase64());
             model.setAdjunto(Adjunto.imagen);
         }
 

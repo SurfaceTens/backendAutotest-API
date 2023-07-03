@@ -11,6 +11,7 @@ import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
 import com.dim.autotestAPI.REST.models.PreguntaModel;
+import com.dim.autotestAPI.REST.models.PreguntaQuickModel;
 import com.dim.autotestAPI.entidades.PreguntaConID;
 import com.dim.autotestAPI.REST.controllers.PreguntaController;
 
@@ -20,36 +21,15 @@ import es.mde.acing.utils.Pregunta;
 import es.mde.acing.utils.PreguntaImpl.Adjunto;
 
 @Component
-public class PreguntaListAssembler<T extends Pregunta> implements RepresentationModelAssembler<T, PreguntaModel> {
+public class PreguntaQuickListAssembler<T extends Pregunta> implements RepresentationModelAssembler<T, PreguntaQuickModel> {
 
 	@Override
-	public PreguntaModel toModel(T entity) {
-		PreguntaModel model = new PreguntaModel();
+	public PreguntaQuickModel toModel(T entity) {
+		PreguntaQuickModel model = new PreguntaQuickModel();
 		model.setId(((PreguntaConID) entity).getId());
 		model.setTematica(entity.getTematica());
 		model.setDificultad(entity.getDificultad());
 		model.setEnunciado(entity.getEnunciado());
-		model.setOpcionCorrecta(entity.getOpcionCorrecta());
-		model.setOpcionIncorrecta1(entity.getOpcionInCorrecta1());
-		model.setOpcionIncorrecta2(entity.getOpcionInCorrecta2());
-		model.setOpcionIncorrecta3(entity.getOpcionInCorrecta3());
-		
-		if (entity.getAdjunto() == Adjunto.video) {
-			model.setVideoURL(((ConVideo) entity).getVideoURL());
-			model.setImagenBase64(null);
-			model.setAdjunto(Adjunto.video);
-		} else if (entity.getAdjunto() == Adjunto.imagen) {
-			model.setImagenBase64(((ConImagen) entity).getImagenBase64());
-			model.setVideoURL(null);
-			model.setAdjunto(Adjunto.imagen);
-		} else {
-			model.setImagenBase64(null);
-			model.setVideoURL(null);
-			model.setAdjunto(Adjunto.ninguno);
-		}
-
-		int numExamenes = entity.getExamenes() != null ? entity.getExamenes().size() : 0;
-		model.setNumExamenes(numExamenes);
 
 		model.add(
 				linkTo(methodOn(PreguntaController.class).one(((PreguntaConID) entity).getId())).withSelfRel()
@@ -57,8 +37,8 @@ public class PreguntaListAssembler<T extends Pregunta> implements Representation
 		return model;
 	}
 
-	public CollectionModel<PreguntaModel> toCollection(List<T> lista) {
-		CollectionModel<PreguntaModel> collection = CollectionModel
+	public CollectionModel<PreguntaQuickModel> toCollection(List<T> lista) {
+		CollectionModel<PreguntaQuickModel> collection = CollectionModel
 				.of(lista.stream().map(this::toModel).collect(Collectors.toList()));
 		return collection;
 	}
