@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.dim.autotestAPI.REST.models.PreguntaModel;
 import com.dim.autotestAPI.entidades.PreguntaConID;
+import com.dim.autotestAPI.entidades.PreguntaConImagen;
 import com.dim.autotestAPI.REST.controllers.PreguntaController;
 
 import es.mde.acing.utils.ConImagen;
@@ -39,7 +40,9 @@ public class PreguntaListAssembler<T extends Pregunta> implements Representation
 			model.setImagenBase64(null);
 			model.setAdjunto(Adjunto.video);
 		} else if (entity.getAdjunto() == Adjunto.imagen) {
-			model.setImagenBase64(((ConImagen) entity).getImagenBase64());
+			String imagenbase64 = ((ConImagen) entity).getImagenBase64();
+			imagenbase64 = PreguntaConImagen.calcularCabeceraBase64(imagenbase64) + imagenbase64;
+			model.setImagenBase64(imagenbase64);
 			model.setVideoURL(null);
 			model.setAdjunto(Adjunto.imagen);
 		} else {

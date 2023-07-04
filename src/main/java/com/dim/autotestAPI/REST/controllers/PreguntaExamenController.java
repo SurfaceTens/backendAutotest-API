@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -82,9 +83,9 @@ public class PreguntaExamenController {
 		return assembler.toModel(editar);
 	}
 
-	@GetMapping("generarExamen/{numPreguntas}/{idAlumno}/{dificultad}")
-	public CollectionModel<PreguntaExamenModel> generarExamen(@PathVariable int numPreguntas,
-			@PathVariable Long idAlumno, @PathVariable NivelDificultad dificultad) {
+	@GetMapping("generarExamen")
+	public CollectionModel<PreguntaExamenModel> generarExamen(@RequestParam int numPreguntas,
+	        @RequestParam Long idAlumno, @RequestParam NivelDificultad dificultad) {
 		List<PreguntaExamenConID> preguntasExamen = new ArrayList<>();
 		List<PreguntaConID> preguntas = new ArrayList<>();
 		
