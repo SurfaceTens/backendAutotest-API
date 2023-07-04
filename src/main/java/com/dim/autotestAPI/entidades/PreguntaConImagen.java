@@ -62,7 +62,7 @@ public class PreguntaConImagen extends PreguntaConID implements ConImagen{
 	}
 
 	public static String quitarCabeceraBase64(String base64String) {
-		String respuesta = "";
+		String respuesta = base64String;
 		String cabeceraFin = ";base64,";
 		int finIndex = base64String.indexOf(cabeceraFin);
 		if (finIndex != -1) {

@@ -34,7 +34,9 @@ public class PreguntaAssembler implements RepresentationModelAssembler<PreguntaC
 		model.setOpcionIncorrecta3(entity.getOpcionInCorrecta3());
 
 		if (entity.getAdjunto() == Adjunto.video) {
-			model.setVideoURL(((ConVideo) entity).getVideoURL());
+			String videoYoutube = ((ConVideo) entity).getVideoURL();
+			videoYoutube = PreguntaConVideo.extraerIdVideoYoutube(videoYoutube);
+			model.setVideoURL(videoYoutube);
 			model.setImagenBase64("");
 			model.setAdjunto(Adjunto.video);
 		} else if (entity.getAdjunto() == Adjunto.imagen) {
@@ -69,7 +71,7 @@ public class PreguntaAssembler implements RepresentationModelAssembler<PreguntaC
 		}
 		case video: {
 			PreguntaConVideo video = new PreguntaConVideo();
-			video.setVideoURL(model.getVideoURL());
+			video.setVideoURL(PreguntaConVideo.extraerIdVideoYoutube(model.getVideoURL()));
 			entity = video;
 			break;
 		}
