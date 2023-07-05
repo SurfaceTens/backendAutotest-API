@@ -10,9 +10,6 @@ public class ExamenPostModel extends RepresentationModel<ExamenPostModel> {
 
 	private AlumnoConID alumno;
 	private boolean entregado;
-	private String nota;
-	private int aciertos;
-	private int fallos;
 
 	public AlumnoConID getAlumno() {
 		return alumno;
@@ -28,30 +25,6 @@ public class ExamenPostModel extends RepresentationModel<ExamenPostModel> {
 
 	public void setEntregado(boolean entregado) {
 		this.entregado = entregado;
-	}
-
-	public String getNota() {
-		return nota;
-	}
-
-	public void setNota(String nota) {
-		this.nota = nota;
-	}
-
-	public int getAciertos() {
-		return aciertos;
-	}
-
-	public void setAciertos(int aciertos) {
-		this.aciertos = aciertos;
-	}
-
-	public int getFallos() {
-		return fallos;
-	}
-
-	public void setFallos(int fallos) {
-		this.fallos = fallos;
 	}
 
 }
