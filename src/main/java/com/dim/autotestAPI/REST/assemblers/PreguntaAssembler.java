@@ -34,11 +34,15 @@ public class PreguntaAssembler implements RepresentationModelAssembler<PreguntaC
 		model.setOpcionIncorrecta3(entity.getOpcionInCorrecta3());
 
 		if (entity.getAdjunto() == Adjunto.video) {
-			model.setVideoURL(((ConVideo) entity).getVideoURL());
+			String videoYoutube = ((ConVideo) entity).getVideoURL();
+			videoYoutube = PreguntaConVideo.extraerIdVideoYoutube(videoYoutube);
+			model.setVideoURL(videoYoutube);
 			model.setImagenBase64("");
 			model.setAdjunto(Adjunto.video);
 		} else if (entity.getAdjunto() == Adjunto.imagen) {
-			model.setImagenBase64(((ConImagen) entity).getImagenBase64());
+			String imagenbase64 = ((ConImagen) entity).getImagenBase64();
+			imagenbase64 = PreguntaConImagen.calcularCabeceraBase64(imagenbase64) + imagenbase64;
+			model.setImagenBase64(imagenbase64);
 			model.setVideoURL(null);
 			model.setAdjunto(Adjunto.imagen);
 		} else {
@@ -61,13 +65,13 @@ public class PreguntaAssembler implements RepresentationModelAssembler<PreguntaC
 		switch (model.getAdjunto()) {
 		case imagen: {
 			PreguntaConImagen imagen = new PreguntaConImagen();
-			imagen.setImagenBase64(model.getImagenBase64());
+			imagen.setImagenBase64(PreguntaConImagen.quitarCabeceraBase64(model.getImagenBase64()));
 			entity = imagen;
 			break;
 		}
 		case video: {
 			PreguntaConVideo video = new PreguntaConVideo();
-			video.setVideoURL(model.getVideoURL());
+			video.setVideoURL(PreguntaConVideo.extraerIdVideoYoutube(model.getVideoURL()));
 			entity = video;
 			break;
 		}

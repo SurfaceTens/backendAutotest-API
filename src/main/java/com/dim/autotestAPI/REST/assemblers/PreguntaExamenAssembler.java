@@ -68,7 +68,9 @@ public class PreguntaExamenAssembler<T extends PreguntaExamen>
         } else if (entity.getPregunta().getAdjunto() == Adjunto.imagen) {
             Session session = entityManager.unwrap(Session.class);
             PreguntaConImagen preguntaConImagen = session.get(PreguntaConImagen.class, ((PreguntaConID) entity.getPregunta()).getId());
-            model.setAdjuntoURL(preguntaConImagen.getImagenBase64());
+            String imagenbase64 = preguntaConImagen.getImagenBase64();
+            imagenbase64 = PreguntaConImagen.calcularCabeceraBase64(imagenbase64) + imagenbase64;
+            model.setAdjuntoURL(imagenbase64);
             model.setAdjunto(Adjunto.imagen);
         }
 
