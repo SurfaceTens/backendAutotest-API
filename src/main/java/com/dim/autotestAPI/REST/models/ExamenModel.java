@@ -8,6 +8,8 @@ import com.dim.autotestAPI.entidades.AlumnoConID;
 @Relation(itemRelation = "examen")
 public class ExamenModel extends RepresentationModel<ExamenModel> {
 
+	public static final double UMBRAL_APROBADO = 0.9;
+	
 	private Long id;
 
 	private AlumnoConID alumno;

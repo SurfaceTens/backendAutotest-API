@@ -54,8 +54,6 @@ public class PreguntaConImagen extends PreguntaConID implements ConImagen{
 			String tipo = entry.getValue();
 			if (imagenBase64.startsWith(inicio)) {
 				respuesta = "data:" + tipo + ";base64,";
-			} else {
-				System.out.println("No se encontró un tipo MIME válido.");
 			}
 		}
 		return respuesta;

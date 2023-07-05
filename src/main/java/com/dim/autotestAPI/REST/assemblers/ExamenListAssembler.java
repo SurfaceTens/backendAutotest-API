@@ -15,6 +15,7 @@ import com.dim.autotestAPI.entidades.AlumnoConID;
 import com.dim.autotestAPI.entidades.ExamenConID;
 
 import es.mde.acing.utils.Examen;
+import es.mde.acing.utils.PreguntaExamen;
 
 import com.dim.autotestAPI.REST.controllers.AlumnoController;
 import com.dim.autotestAPI.REST.controllers.ExamenController;
@@ -27,14 +28,29 @@ public class ExamenListAssembler<T extends Examen> implements RepresentationMode
 		ExamenModel model = new ExamenModel();
 		model.setId(((ExamenConID) entity).getId());
 		model.setEntregado(entity.isEntregado());
-		model.setNota(((ExamenConID) entity).getNota());
-		model.setAciertos(((ExamenConID) entity).getAciertos());
-		model.setFallos(((ExamenConID) entity).getFallos());
 		model.setAlumnoDatos(entity.getAlumno().getNombre() + " " + entity.getAlumno().getApellidos());
 
 		int numPreguntas = ((ExamenConID) entity).getPreguntas() != null ? ((ExamenConID) entity).getPreguntas().size()
 				: 0;
 		model.setNumPreguntas(numPreguntas);
+		
+		List<PreguntaExamen> preguntas = entity.getPreguntas();
+		int aciertos = 0;
+		int fallos = 0;
+		for (PreguntaExamen pregunta : preguntas) {
+			if (pregunta.isAcertada()) {
+				aciertos++;
+			} else if (pregunta.getRespuesta() != null) {
+				fallos++;
+			}
+		}
+		String nota = "NO APTO";
+		if ((double) aciertos / numPreguntas >= ExamenModel.UMBRAL_APROBADO) {
+			nota = "APTO";
+		}
+		model.setAciertos(aciertos);
+		model.setFallos(fallos);
+		model.setNota(nota);
 
 		model.add(linkTo(methodOn(ExamenController.class).one(((ExamenConID) entity).getId())).withSelfRel(),
 				linkTo(methodOn(AlumnoController.class).one(((AlumnoConID) entity.getAlumno()).getId()))
