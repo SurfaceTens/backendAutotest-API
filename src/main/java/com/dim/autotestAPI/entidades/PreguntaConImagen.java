@@ -14,7 +14,7 @@ public class PreguntaConImagen extends PreguntaConID implements ConImagen{
 	public String getImagenBase64() {
 		return Base64.getEncoder().encodeToString(imagen);
 	}
-	@Override
+	
 	public void setImagenBase64(String imagenBase64) {
 		this.imagen = Base64.getDecoder().decode(imagenBase64);
 	}
