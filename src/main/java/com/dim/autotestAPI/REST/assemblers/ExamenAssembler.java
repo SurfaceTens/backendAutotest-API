@@ -26,6 +26,7 @@ public class ExamenAssembler implements RepresentationModelAssembler<ExamenConID
 		ExamenModel model = new ExamenModel();
 		model.setId(entity.getId());
 		model.setEntregado(entity.isEntregado());
+		model.setAlumno((AlumnoConID) entity.getAlumno());
 		
 		
 		
