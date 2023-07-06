@@ -111,7 +111,7 @@ public class PreguntaController {
 				repositorio.actualizarImagen(((PreguntaConImagen) preguntaAssembler.toEntity(model)).getImagen(), id);
 			} else if (model.getAdjunto() == Adjunto.video) {
 				new PreguntaConVideo();
-				repositorio.actualizarVideo(model.getVideoURL(), id);
+				repositorio.actualizarVideo(PreguntaConVideo.extraerIdVideoYoutube(model.getVideoURL()), id);
 			} else {
 				repositorio.actualizarNinguno(id);
 			}

@@ -1,6 +1,9 @@
 package com.dim.autotestAPI.REST.models;
 
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+
 
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
@@ -130,5 +133,6 @@ public class PreguntaModel extends RepresentationModel<PreguntaModel> {
 	public void setExamenes(List<PreguntaExamen> examenes) {
 		this.examenes = examenes;
 	}
+
 
 }
