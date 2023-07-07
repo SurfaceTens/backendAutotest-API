@@ -12,7 +12,7 @@ public class ExamenModel extends RepresentationModel<ExamenModel> {
 	
 	private Long id;
 
-	private AlumnoConID alumno;
+	private Long alumnoID;
 	private String alumnoDatos;
 	private int numPreguntas;
 	private boolean entregado;
@@ -28,8 +28,16 @@ public class ExamenModel extends RepresentationModel<ExamenModel> {
 		this.id = id;
 	}
 
-	public AlumnoConID getAlumno() {
-		return alumno;
+	public Long getAlumnoID() {
+		return alumnoID;
+	}
+
+	public void setAlumnoID(Long alumnoID) {
+		this.alumnoID = alumnoID;
+	}
+
+	public static double getUmbralAprobado() {
+		return UMBRAL_APROBADO;
 	}
 
 	public int getNumPreguntas() {
@@ -38,10 +46,6 @@ public class ExamenModel extends RepresentationModel<ExamenModel> {
 
 	public void setNumPreguntas(int numPreguntas) {
 		this.numPreguntas = numPreguntas;
-	}
-
-	public void setAlumno(AlumnoConID alumno) {
-		this.alumno = alumno;
 	}
 
 	public boolean isEntregado() {
